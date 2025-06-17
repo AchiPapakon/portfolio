@@ -18,12 +18,14 @@ interface BackendFetchObject<T> {
 }
 
 interface StationsStore {
+    nearbyStationError: boolean;
     selectedStation: ListSuggestion | null;
     stationDetails: BackendFetchObject<StationDetails>;
     suggestions: BackendFetchList<Station>;
 }
 
 const initialState: StationsStore = {
+    nearbyStationError: false,
     selectedStation: null,
     stationDetails: {
         object: {},
@@ -76,6 +78,9 @@ const stationsSlice = createSlice({
             reducer: (state) => state,
             prepare: (listSuggestion?: ListSuggestion) => ({ payload: listSuggestion ?? null }),
         },
+        setNearbyStationError: (state, { payload }: PayloadAction<boolean>) => {
+            state.nearbyStationError = payload;
+        },
     },
 });
 
@@ -91,6 +96,7 @@ export const {
     setStationsFetching,
     getNearestStations,
     getStationDepartures,
+    setNearbyStationError,
 } = stationsSlice.actions;
 
 const stationsSliceReducer = stationsSlice.reducer;

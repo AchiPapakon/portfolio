@@ -1,5 +1,6 @@
 {
     "iFeelLucky": "I feel lucky",
+    "nearbyStationError": "No Station nearby",
     "noDepartures": "No departures",
     "noStationSelected": "No Station selected",
     "station": "Station"

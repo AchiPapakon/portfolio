@@ -4,7 +4,13 @@ import type { StationDeparture, StationDepartures } from 'types/gateway';
 import type { ListSuggestion } from 'types/ListSuggestion';
 import { translate } from './helpers/translation';
 import { useDispatch, useSelector } from './redux/hooks';
-import { getNearestStations, getStationDepartures, getStations, resetStations } from './redux/stations/reducer';
+import {
+    getNearestStations,
+    getStationDepartures,
+    getStations,
+    resetStations,
+    setNearbyStationError,
+} from './redux/stations/reducer';
 import {
     selectedStationSelector,
     stationDetailsFetchingSelector,
@@ -42,6 +48,7 @@ const App = () => {
 
     const handleAutocompleteSelect = (_: React.SyntheticEvent<Element, Event>, value: ListSuggestion | null) => {
         if (value) {
+            dispatch(setNearbyStationError(false));
             dispatch(getStationDepartures(value));
         }
     };

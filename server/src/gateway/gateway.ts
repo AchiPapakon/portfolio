@@ -173,8 +173,11 @@ export class Gateway implements OnGatewayConnection, OnGatewayInit, OnModuleDest
     async onGetNearestStation(
         @MessageBody('lat') lat: number,
         @MessageBody('lon') lon: number,
+        @ConnectedSocket() client: ExtendedWebSocket,
     ): Promise<GetNearestStationResponse> {
         try {
+            client.lastRequest = undefined;
+
             const { northLat, southLat, eastLon, westLon } = getBoundingBox(lat, lon, 150);
 
             const searchParams = {

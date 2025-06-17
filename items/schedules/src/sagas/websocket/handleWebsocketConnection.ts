@@ -6,6 +6,7 @@ import type { ExtendedWebSocket } from '../../types/websocket';
 import { setIsOpen } from '../../redux/websocket/reducer';
 import {
     getStationDepartures,
+    setNearbyStationError,
     setSelectedStation,
     setStationDetails,
     setStationDetailsFetching,
@@ -45,7 +46,7 @@ const websocketConnection = (socket: ExtendedWebSocket) => {
                         if (payload) {
                             emit(getStationDepartures(payload as ListSuggestion));
                         } else {
-                            // TODO: message "nothing found nearby"
+                            emit(setNearbyStationError(true));
                             emit(setSelectedStation(null));
                             localStorage.setItem('selectedStation', JSON.stringify(null));
                             emit(setStationDetailsFetching(false));

@@ -21,3 +21,5 @@ export const stationDetailsFetchingSelector = (state: RootState) => state.statio
 export const stationDetailsObjectSelector = (state: RootState) => state.stations.stationDetails.object;
 
 export const selectedStationSelector = (state: RootState) => state.stations.selectedStation;
+
+export const nearbyStationErrorSelector = (state: RootState) => state.stations.nearbyStationError;
