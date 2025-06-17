@@ -1,0 +1,15 @@
+{
+    "background_color": "#ffffff",
+    "description": "A web application that provides various features.",
+    "display": "standalone",
+    "icons": [
+        {
+            "sizes": "144x144",
+            "src": "/vite144.svg",
+            "type": "image/svg+xml"
+        }
+    ],
+    "name": "Schedules",
+    "start_url": "/",
+    "theme_color": "#000000"
+}
