@@ -1,4 +1,4 @@
-import { put, takeLatest, takeLeading } from 'redux-saga/effects';
+import { put, takeLatest, takeLeading, throttle } from 'redux-saga/effects';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { ListSuggestion } from 'types/ListSuggestion';
 import {
@@ -99,7 +99,7 @@ function* getStationDeparturesSaga({ payload: listSuggestion }: PayloadAction<Li
 }
 
 function* stationsSaga(socket: ExtendedWebSocket) {
-    yield takeLatest(getStations.type, getStationsSaga);
+    yield throttle(750, getStations.type, getStationsSaga);
     yield takeLatest(getStationDetails.type, (action: PayloadAction<number>) => getStationDetailsSaga(action, socket));
     yield takeLatest(getStationDepartures.type, getStationDeparturesSaga);
 

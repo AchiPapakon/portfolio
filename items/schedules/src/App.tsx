@@ -87,7 +87,9 @@ const App = () => {
                         if (!value) {
                             dispatch(resetStations());
                         }
-                        dispatch(getStations(value));
+                        if (value.length > 2) {
+                            dispatch(getStations(value));
+                        }
                     }}
                     // eslint-disable-next-line react/jsx-props-no-spreading
                     renderInput={(params) => <TextField {...params} label={translate('station')} />}
