@@ -1,7 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 import singleFetch from './SingleFetch';
-import { WeatherResponse } from 'types/localWeather';
+import { LocalWeatherResponse, WeatherResponse } from 'types/localWeather';
 
 @Controller()
 export class AppController {
@@ -13,7 +13,7 @@ export class AppController {
     }
 
     @Get('/api/local-weather')
-    async getLocalWeather(@Query('lat') lat: number, @Query('lon') lon: number): Promise<any> {
+    async getLocalWeather(@Query('lat') lat: number, @Query('lon') lon: number): Promise<LocalWeatherResponse> {
         try {
             const response: WeatherResponse = (await singleFetch.get(
                 `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=5677fc3d8285d75415ac8fbd8b866bdb`,
@@ -56,11 +56,24 @@ export class AppController {
                 wind: Math.round(response.wind.speed * 3.6 * 10) / 10,
                 sunrise: response.sys.sunrise,
                 sunset: response.sys.sunset,
-                lastUpdate: new Date(response.dt * 1000).toLocaleString(),
+                lastUpdate: response.dt * 1000,
                 backgroundColor,
             };
         } catch (error) {
             console.error('Error on /api/local-weather', error);
+            return {
+                name: '',
+                country: '',
+                img: '',
+                description: '',
+                degrees: 0,
+                humidity: 0,
+                wind: 0,
+                sunrise: 0,
+                sunset: 0,
+                lastUpdate: Date.now(),
+                backgroundColor: 'black',
+            };
         }
     }
 }

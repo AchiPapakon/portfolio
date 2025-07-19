@@ -21,7 +21,7 @@ const LocalWeather = () => {
         degrees: 0,
         humidity: 0,
         wind: 0,
-        lastUpdate: '',
+        lastUpdate: Date.now(),
         sunrise: 0,
         sunset: 0,
         backgroundColor: 'black',
@@ -105,7 +105,9 @@ const LocalWeather = () => {
                                     </Stack>
                                 </Grid>
                             </Grid>
-                            <Typography variant="caption">Last update: {info.lastUpdate}</Typography>
+                            <Typography variant="caption">
+                                Last update: {new Date(info.lastUpdate).toLocaleString()}
+                            </Typography>
                         </Stack>
                     </Content>
                 </Paper>

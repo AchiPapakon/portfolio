@@ -55,6 +55,6 @@ export interface LocalWeatherResponse {
   wind: number;
   sunrise: number;
   sunset: number;
-  lastUpdate: string;
+  lastUpdate: number;
   backgroundColor: string;
 }
