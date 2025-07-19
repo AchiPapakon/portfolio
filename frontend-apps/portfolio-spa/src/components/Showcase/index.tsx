@@ -17,6 +17,16 @@ const Section = styled(Box)({
 
 const textShadow: string = '2px 2px 2px #323232';
 
+const NameTitle = ({ children }: { children: React.ReactNode }) => (
+    <Typography
+        variant="h1"
+        color="secondary"
+        sx={{ fontWeight: 400, fontSize: { xs: '10vw', sm: '8vw' }, textShadow }}
+    >
+        {children}
+    </Typography>
+);
+
 const Showcase = () => (
     <>
         <Section
@@ -28,13 +38,14 @@ const Showcase = () => (
             }}
         >
             <Box sx={{ textAlign: 'center' }}>
-                <Typography variant="h1" color="secondary" sx={{ fontWeight: 400, textShadow }}>
-                    Achilleas
-                </Typography>
-                <Typography variant="h1" color="secondary" sx={{ fontWeight: 400, textShadow }}>
-                    Papakonstantinou
-                </Typography>
-                <Typography variant="h3" color="secondary" fontFamily={dancingScript} sx={{ textShadow }}>
+                <NameTitle>Achilleas</NameTitle>
+                <NameTitle>Papakonstantinou</NameTitle>
+                <Typography
+                    variant="h3"
+                    color="secondary"
+                    fontFamily={dancingScript}
+                    sx={{ fontSize: { xs: '8vw', sm: '4.5vw' }, textShadow }}
+                >
                     My personal portfolio page.
                 </Typography>
                 <Box component="hr" sx={{ borderColor: 'secondary.main', textShadow }} />
