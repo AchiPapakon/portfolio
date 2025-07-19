@@ -1,0 +1,128 @@
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import { Box, Paper, styled, Typography } from '@mui/material';
+import FreeCodeCampIcon from './free-code-camp.svg?react';
+import profilePic from './profile-pic.jpg';
+import IconButtonLink from '../IconButtonLink';
+import { dancingScript } from '../../css/generic';
+
+const Section = styled(Box)({
+    backgroundRepeat: 'no-repeat',
+    backgroundAttachment: 'fixed',
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    display: 'flex',
+    alignItems: 'center',
+});
+
+const textShadow: string = '2px 2px 2px #323232';
+
+const Showcase = () => (
+    <>
+        <Section
+            id="home"
+            sx={{
+                backgroundImage: 'url(/background/acropolis.jpg)',
+                justifyContent: 'center',
+                minHeight: '100vh',
+            }}
+        >
+            <Box sx={{ textAlign: 'center' }}>
+                <Typography variant="h1" color="secondary" sx={{ fontWeight: 400, textShadow }}>
+                    Achilleas
+                </Typography>
+                <Typography variant="h1" color="secondary" sx={{ fontWeight: 400, textShadow }}>
+                    Papakonstantinou
+                </Typography>
+                <Typography variant="h3" color="secondary" fontFamily={dancingScript} sx={{ textShadow }}>
+                    My personal portfolio page.
+                </Typography>
+                <Box component="hr" sx={{ borderColor: 'secondary.main', textShadow }} />
+            </Box>
+        </Section>
+        <Section
+            id="about"
+            sx={{
+                backgroundImage: 'url(/background/nice.jpg)',
+                justifyContent: 'center',
+                minHeight: '100vh',
+            }}
+        >
+            <Box
+                sx={{
+                    display: 'grid',
+                    maxWidth: '1200px',
+                    mt: { xs: '100px', sm: '100px', md: 'initial' },
+                    gridTemplateColumns: { xs: '350px', sm: '350px', md: '350px 1fr' },
+                    gap: { xs: '50px', sm: '50px', md: '200px' },
+                }}
+            >
+                <Box sx={{ display: 'grid', gap: 2, order: { xs: 1, sm: 1, md: 0 } }}>
+                    <Paper sx={{ p: 3 }}>
+                        <Typography variant="h3" fontFamily="Dancing Script, cursive">
+                            About me
+                        </Typography>
+                    </Paper>
+                    <Paper sx={{ p: 3 }}>
+                        <Typography>
+                            I am a Fullstack Developer since 2017 and I&apos;m currently based in Nice, France.
+                        </Typography>
+                        <Typography>I have built this website using:</Typography>
+                        <Typography>Frontend:</Typography>
+                        <ul>
+                            <Typography component="li">React</Typography>
+                            <Typography component="li">Material UI (MUI)</Typography>
+                            <Typography component="li">TypeScript</Typography>
+                            <Typography component="li">Vite</Typography>
+                        </ul>
+                        <Typography>Backend:</Typography>
+                        <ul>
+                            <Typography component="li">NestJS</Typography>
+                            <Typography component="li">Vite</Typography>
+                            <Typography component="li">MySQL</Typography>
+                            <Typography component="li">Nginx</Typography>
+                            <Typography component="li">Ubuntu</Typography>
+                        </ul>
+                    </Paper>
+                </Box>
+                <Box
+                    component="img"
+                    src={profilePic}
+                    sx={{ borderRadius: '50%', marginLeft: 'auto', marginRight: 'auto' }}
+                />
+            </Box>
+        </Section>
+        <Section id="contact" sx={{ backgroundImage: 'url(/background/contact.jpg)', minHeight: '410px' }}>
+            <Box sx={{ marginLeft: '10%', display: 'grid', gap: 1 }}>
+                <Typography variant="h3" color="secondary" fontFamily="Dancing Script, cursive">
+                    Contact me
+                </Typography>
+                <IconButtonLink
+                    href="https://www.linkedin.com/in/achilleas-papakonstantinou-aa6447113/"
+                    sx={{ color: '#007bb5', backgroundColor: 'secondary.main' }}
+                >
+                    <LinkedInIcon style={{ width: 45, height: 45 }} />
+                </IconButtonLink>
+                <Typography color="secondary">Papakonstantinou.Achilleas (at) gmail.com</Typography>
+                <Box component="hr" width="100%" />
+                <Typography color="secondary">Bonus Portfolio:</Typography>
+                <Box sx={{ display: 'flex', gap: 1 }}>
+                    <IconButtonLink
+                        href="https://github.com/AchiPapakon?tab=repositories&type=source"
+                        sx={{ color: '#24292e', backgroundColor: 'secondary.main' }}
+                    >
+                        <GitHubIcon style={{ width: 30, height: 30 }} />
+                    </IconButtonLink>
+                    <IconButtonLink
+                        href="https://www.freecodecamp.org/achipapakon"
+                        sx={{ backgroundColor: 'secondary.main' }}
+                    >
+                        <FreeCodeCampIcon fill="#006400" width="42" height="42" />
+                    </IconButtonLink>
+                </Box>
+            </Box>
+        </Section>
+    </>
+);
+
+export default Showcase;

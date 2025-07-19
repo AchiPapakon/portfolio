@@ -1,7 +1,8 @@
 import { PointsByBoundingBox } from 'types/GetPointsByBoundingBox';
+import { WeatherResponse } from 'types/localWeather';
 import { NextDeparture } from 'types/NextDeparture';
 
-type Response = NextDeparture | PointsByBoundingBox;
+type Response = NextDeparture | PointsByBoundingBox | WeatherResponse;
 
 interface FetchElement {
     lastFetch: number;
