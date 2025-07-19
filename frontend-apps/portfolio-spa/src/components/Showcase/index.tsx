@@ -1,10 +1,32 @@
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import { Box, Paper, styled, Typography } from '@mui/material';
+import { Box, Grid, Paper, Stack, styled, Typography } from '@mui/material';
 import FreeCodeCampIcon from './free-code-camp.svg?react';
 import profilePic from './profile-pic.jpg';
 import IconButtonLink from '../IconButtonLink';
-import { dancingScript } from '../../css/generic';
+import { dancingScript, whiteUnderlineSx } from '../../css/generic';
+import calculatorImg from './calculator.png';
+import localWeatherImg from './local-weather.png';
+
+interface ShowcaseItem {
+    relativeUrl: string;
+    img: string;
+    title: string;
+    newTab?: boolean;
+}
+
+const showcaseItems: ShowcaseItem[] = [
+    {
+        relativeUrl: `/portfolio/calculator`,
+        img: calculatorImg,
+        title: `Calculator`,
+    },
+    {
+        relativeUrl: `/portfolio/local-weather`,
+        img: localWeatherImg,
+        title: `Local Weather`,
+    },
+];
 
 const Section = styled(Box)({
     backgroundRepeat: 'no-repeat',
@@ -70,7 +92,7 @@ const Showcase = () => (
             >
                 <Box sx={{ display: 'grid', gap: 2, order: { xs: 1, sm: 1, md: 0 } }}>
                     <Paper sx={{ p: 3 }}>
-                        <Typography variant="h3" fontFamily="Dancing Script, cursive">
+                        <Typography variant="h2" textAlign="center" fontFamily="Dancing Script, cursive">
                             About me
                         </Typography>
                     </Paper>
@@ -103,9 +125,50 @@ const Showcase = () => (
                 />
             </Box>
         </Section>
+        <Section
+            id="portfolio"
+            sx={{
+                backgroundImage: 'url(/background/library.jpg)',
+                justifyContent: 'center',
+                minHeight: '100vh',
+            }}
+        >
+            <Stack spacing={1} sx={{ maxWidth: '1200px' }}>
+                <Paper sx={{ p: 3 }}>
+                    <Typography variant="h2" component="div" textAlign="center" fontFamily="Dancing Script, cursive">
+                        <Box>My web development portfolio</Box>
+                        <Box>(NestJS/React)</Box>
+                    </Typography>
+                </Paper>
+                <Grid container spacing={1}>
+                    {showcaseItems.map(({ relativeUrl, img, title }) => (
+                        <Box
+                            key={title}
+                            component="a"
+                            href={relativeUrl}
+                            sx={{
+                                width: '300px',
+                                height: '385px',
+                                p: 0.5,
+                                backgroundColor: 'black',
+                                border: '1px solid white',
+                                borderRadius: '4px',
+                                textAlign: 'center',
+                                ...whiteUnderlineSx,
+                            }}
+                        >
+                            <Stack justifyContent="space-between" height="100%">
+                                <Box component="img" src={img} width="100%" />
+                                <Typography color="secondary">{title}</Typography>
+                            </Stack>
+                        </Box>
+                    ))}
+                </Grid>
+            </Stack>
+        </Section>
         <Section id="contact" sx={{ backgroundImage: 'url(/background/contact.jpg)', minHeight: '410px' }}>
             <Box sx={{ marginLeft: '10%', display: 'grid', gap: 1 }}>
-                <Typography variant="h3" color="secondary" fontFamily="Dancing Script, cursive">
+                <Typography variant="h2" color="secondary" fontFamily="Dancing Script, cursive">
                     Contact me
                 </Typography>
                 <IconButtonLink

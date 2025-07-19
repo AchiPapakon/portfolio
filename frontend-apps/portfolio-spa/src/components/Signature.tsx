@@ -1,4 +1,5 @@
 import { Box, Toolbar, Typography } from '@mui/material';
+import { whiteUnderlineSx } from '../css/generic';
 
 const Signature = () => (
     <Toolbar sx={{ justifyContent: 'center', gap: 0.5, flexDirection: { xs: 'column', sm: 'row' } }}>
@@ -10,23 +11,7 @@ const Signature = () => (
                 href="https://www.achipapakon.com"
                 target="_blank"
                 rel="noopener"
-                sx={{
-                    color: 'secondary.main',
-                    textDecoration: 'none',
-                    '&:hover': {
-                        color: 'secondary.main',
-                    },
-                    '&:after': {
-                        display: 'block',
-                        content: '""',
-                        borderBottom: 'solid 1px #fff',
-                        transform: 'scaleX(0)',
-                        transition: 'transform 250ms ease-in-out',
-                    },
-                    '&:hover:after': {
-                        transform: 'scaleX(1)',
-                    },
-                }}
+                sx={whiteUnderlineSx}
             >
                 Achilleas Papakonstantinou
             </Typography>

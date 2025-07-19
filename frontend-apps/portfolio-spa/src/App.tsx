@@ -20,6 +20,7 @@ import Showcase from './components/Showcase';
 import Error404 from './components/Error404';
 import LocalWeather from './components/LocalWeather';
 import Signature from './components/Signature';
+import Calculator from './components/Calculator';
 
 interface NavItem {
     label: string;
@@ -152,6 +153,7 @@ const DrawerAppBar = () => {
                     <Route path="portfolio">
                         <Route index element={<Error404 />} />
                         <Route path="local-weather" element={<LocalWeather />} />
+                        <Route path="calculator" element={<Calculator />} />
                     </Route>
                     <Route path="*" element={<Error404 />} />
                 </Routes>

@@ -5,6 +5,7 @@ import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import AirIcon from '@mui/icons-material/Air';
 import { dancingScript } from '../../css/generic';
 import Content from './Content';
+import ShowcaseContainer from '../ShowcaseContainer';
 
 const options = {
     enableHighAccuracy: false,
@@ -69,7 +70,7 @@ const LocalWeather = () => {
     }, []);
 
     return (
-        <Box sx={{ backgroundColor: info.backgroundColor, display: 'grid', flex: 1, justifyItems: 'center' }}>
+        <ShowcaseContainer sx={{ backgroundColor: info.backgroundColor }}>
             <Stack spacing={1} sx={{ mt: 1 }}>
                 <Paper sx={{ maxWidth: 500, p: 1 }}>
                     <Typography textAlign="center" variant="h2" fontFamily={dancingScript}>
@@ -112,7 +113,7 @@ const LocalWeather = () => {
                     </Content>
                 </Paper>
             </Stack>
-        </Box>
+        </ShowcaseContainer>
     );
 };
 
