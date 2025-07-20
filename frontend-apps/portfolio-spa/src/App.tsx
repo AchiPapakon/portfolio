@@ -13,9 +13,9 @@ import {
     Toolbar,
     Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Route, Routes } from 'react-router';
+import { Route, Routes, useNavigate, useLocation } from 'react-router';
 import Showcase from './components/Showcase';
 import Error404 from './components/Error404';
 import LocalWeather from './components/LocalWeather';
@@ -86,6 +86,17 @@ const displayWhenEmpty = {
 
 const DrawerAppBar = () => {
     const [mobileOpen, setMobileOpen] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.hash) {
+            const el = document.getElementById(location.hash.replace('#', ''));
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    }, [location.hash]);
 
     const handleDrawerToggle = () => {
         setMobileOpen((prevMobileOPen) => !prevMobileOPen);
@@ -127,7 +138,16 @@ const DrawerAppBar = () => {
                     </Typography>
                     <Box sx={displayWhenFull}>
                         {navItems.map(({ label, id }) => (
-                            <HoverButton key={id} href={id}>
+                            <HoverButton
+                                key={id}
+                                onClick={() => {
+                                    const [path, hash] = id.split('#');
+                                    navigate(path || '/');
+                                    setTimeout(() => {
+                                        window.location.hash = `#${hash}`;
+                                    }, 0);
+                                }}
+                            >
                                 {label}
                             </HoverButton>
                         ))}
