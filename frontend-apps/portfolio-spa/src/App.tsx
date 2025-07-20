@@ -21,6 +21,7 @@ import Error404 from './components/Error404';
 import LocalWeather from './components/LocalWeather';
 import Signature from './components/Signature';
 import Calculator from './components/Calculator';
+import PomodoroClock from './components/PomodoroClock';
 
 interface NavItem {
     label: string;
@@ -172,6 +173,7 @@ const DrawerAppBar = () => {
                     <Route index element={<Showcase />} />
                     <Route path="portfolio">
                         <Route index element={<Error404 />} />
+                        <Route path="pomodoro-clock" element={<PomodoroClock />} />
                         <Route path="local-weather" element={<LocalWeather />} />
                         <Route path="calculator" element={<Calculator />} />
                     </Route>

@@ -7,6 +7,7 @@ import IconButtonLink from '../IconButtonLink';
 import { dancingScript, whiteUnderlineSx } from '../../css/generic';
 import calculatorImg from './calculator.png';
 import localWeatherImg from './local-weather.png';
+import pomodoroClockImg from './pomodoro-clock.png';
 
 interface ShowcaseItem {
     relativeUrl: string;
@@ -17,14 +18,19 @@ interface ShowcaseItem {
 
 const showcaseItems: ShowcaseItem[] = [
     {
-        relativeUrl: `/portfolio/calculator`,
-        img: calculatorImg,
-        title: `Calculator`,
+        relativeUrl: '/portfolio/pomodoro-clock',
+        img: pomodoroClockImg,
+        title: 'Pomodoro Clock',
     },
     {
-        relativeUrl: `/portfolio/local-weather`,
+        relativeUrl: '/portfolio/calculator',
+        img: calculatorImg,
+        title: 'Calculator',
+    },
+    {
+        relativeUrl: '/portfolio/local-weather',
         img: localWeatherImg,
-        title: `Local Weather`,
+        title: 'Local Weather',
     },
 ];
 
@@ -140,7 +146,7 @@ const Showcase = () => (
                         <Box>(NestJS/React)</Box>
                     </Typography>
                 </Paper>
-                <Grid container spacing={1}>
+                <Grid container spacing={1} justifyContent="center">
                     {showcaseItems.map(({ relativeUrl, img, title }) => (
                         <Box
                             key={title}
