@@ -1,6 +1,6 @@
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import { Box, Grid, Paper, Stack, styled, Typography } from '@mui/material';
+import { Box, Paper, Stack, styled, Typography } from '@mui/material';
 import FreeCodeCampIcon from './free-code-camp.svg?react';
 import profilePic from './profile-pic.jpg';
 import IconButtonLink from '../IconButtonLink';
@@ -8,6 +8,7 @@ import { dancingScript, whiteUnderlineSx } from '../../css/generic';
 import calculatorImg from './calculator.png';
 import localWeatherImg from './local-weather.png';
 import pomodoroClockImg from './pomodoro-clock.png';
+import ticTacToeImg from './tic-tac-toe.png';
 
 interface ShowcaseItem {
     relativeUrl: string;
@@ -17,6 +18,11 @@ interface ShowcaseItem {
 }
 
 const showcaseItems: ShowcaseItem[] = [
+    {
+        relativeUrl: '/portfolio/tic-tac-toe',
+        img: ticTacToeImg,
+        title: 'Tic Tac Toe',
+    },
     {
         relativeUrl: '/portfolio/pomodoro-clock',
         img: pomodoroClockImg,
@@ -139,14 +145,21 @@ const Showcase = () => (
                 minHeight: '100vh',
             }}
         >
-            <Stack spacing={1} sx={{ maxWidth: '1200px' }}>
+            <Stack spacing={1} sx={{ width: '1000px' }}>
                 <Paper sx={{ p: 3 }}>
                     <Typography variant="h2" component="div" textAlign="center" fontFamily="Dancing Script, cursive">
                         <Box>My web development portfolio</Box>
                         <Box>(NestJS/React)</Box>
                     </Typography>
                 </Paper>
-                <Grid container spacing={1} justifyContent="center">
+                <Box
+                    sx={{
+                        display: 'grid',
+                        gap: 1,
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                        justifyItems: 'center',
+                    }}
+                >
                     {showcaseItems.map(({ relativeUrl, img, title }) => (
                         <Box
                             key={title}
@@ -164,12 +177,20 @@ const Showcase = () => (
                             }}
                         >
                             <Stack justifyContent="space-between" height="100%">
-                                <Box component="img" src={img} width="100%" />
+                                <Box
+                                    component="img"
+                                    src={img}
+                                    sx={{
+                                        height: 'calc(100% - 24px)',
+                                        width: '100%',
+                                        objectFit: 'contain',
+                                    }}
+                                />
                                 <Typography color="secondary">{title}</Typography>
                             </Stack>
                         </Box>
                     ))}
-                </Grid>
+                </Box>
             </Stack>
         </Section>
         <Section id="contact" sx={{ backgroundImage: 'url(/background/contact.jpg)', minHeight: '410px' }}>
