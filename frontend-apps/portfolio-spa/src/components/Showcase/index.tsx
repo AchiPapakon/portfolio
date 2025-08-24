@@ -5,11 +5,11 @@ import FreeCodeCampIcon from './free-code-camp.svg?react';
 import profilePic from './profile-pic.jpg';
 import IconButtonLink from '../IconButtonLink';
 import { dancingScript, whiteUnderlineSx } from '../../css/generic';
-import calculatorImg from './calculator.png';
-import localWeatherImg from './local-weather.png';
-import pomodoroClockImg from './pomodoro-clock.png';
-import ticTacToeImg from './tic-tac-toe.png';
-import simonGameImg from './simon-game.png';
+import calculatorImg from './thumbnails/calculator.png';
+import localWeatherImg from './thumbnails/local-weather.png';
+import pomodoroClockImg from './thumbnails/pomodoro-clock.png';
+import ticTacToeImg from './thumbnails/tic-tac-toe.png';
+import simonGameImg from './thumbnails/simon-game.png';
 
 interface ShowcaseItem {
     relativeUrl: string;
