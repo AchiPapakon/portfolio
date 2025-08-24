@@ -24,6 +24,7 @@ import Calculator from './components/Calculator';
 import PomodoroClock from './components/PomodoroClock';
 import TicTacToe from './components/TicTacToe';
 import './css/vanilla.css';
+import SimonGame from './components/SimonGame';
 
 interface NavItem {
     label: string;
@@ -179,6 +180,7 @@ const DrawerAppBar = () => {
                         <Route path="local-weather" element={<LocalWeather />} />
                         <Route path="calculator" element={<Calculator />} />
                         <Route path="tic-tac-toe" element={<TicTacToe />} />
+                        <Route path="simon-game" element={<SimonGame />} />
                     </Route>
                     <Route path="*" element={<Error404 />} />
                 </Routes>

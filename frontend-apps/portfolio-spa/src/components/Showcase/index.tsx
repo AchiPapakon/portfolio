@@ -9,6 +9,7 @@ import calculatorImg from './calculator.png';
 import localWeatherImg from './local-weather.png';
 import pomodoroClockImg from './pomodoro-clock.png';
 import ticTacToeImg from './tic-tac-toe.png';
+import simonGameImg from './simon-game.png';
 
 interface ShowcaseItem {
     relativeUrl: string;
@@ -18,6 +19,11 @@ interface ShowcaseItem {
 }
 
 const showcaseItems: ShowcaseItem[] = [
+    {
+        relativeUrl: '/portfolio/simon-game',
+        img: simonGameImg,
+        title: 'Simon Game',
+    },
     {
         relativeUrl: '/portfolio/tic-tac-toe',
         img: ticTacToeImg,
