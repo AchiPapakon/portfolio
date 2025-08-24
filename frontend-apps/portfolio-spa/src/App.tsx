@@ -25,6 +25,7 @@ import PomodoroClock from './components/PomodoroClock';
 import TicTacToe from './components/TicTacToe';
 import './css/vanilla.css';
 import SimonGame from './components/SimonGame';
+import FibonacciClock from './components/FibonacciClock';
 
 interface NavItem {
     label: string;
@@ -181,6 +182,7 @@ const DrawerAppBar = () => {
                         <Route path="calculator" element={<Calculator />} />
                         <Route path="tic-tac-toe" element={<TicTacToe />} />
                         <Route path="simon-game" element={<SimonGame />} />
+                        <Route path="fibonacci-clock" element={<FibonacciClock />} />
                     </Route>
                     <Route path="*" element={<Error404 />} />
                 </Routes>

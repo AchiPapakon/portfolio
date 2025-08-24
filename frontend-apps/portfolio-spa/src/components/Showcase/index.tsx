@@ -10,6 +10,7 @@ import localWeatherImg from './thumbnails/local-weather.png';
 import pomodoroClockImg from './thumbnails/pomodoro-clock.png';
 import ticTacToeImg from './thumbnails/tic-tac-toe.png';
 import simonGameImg from './thumbnails/simon-game.png';
+import fibonacciClockImg from './thumbnails/fibonacci-clock.png';
 
 interface ShowcaseItem {
     relativeUrl: string;
@@ -19,6 +20,11 @@ interface ShowcaseItem {
 }
 
 const showcaseItems: ShowcaseItem[] = [
+    {
+        relativeUrl: '/portfolio/fibonacci-clock',
+        img: fibonacciClockImg,
+        title: 'Fibonacci Clock',
+    },
     {
         relativeUrl: '/portfolio/simon-game',
         img: simonGameImg,
@@ -149,6 +155,7 @@ const Showcase = () => (
                 backgroundImage: 'url(/background/library.jpg)',
                 justifyContent: 'center',
                 minHeight: '100vh',
+                py: 10,
             }}
         >
             <Stack spacing={1} sx={{ width: '1000px' }}>
