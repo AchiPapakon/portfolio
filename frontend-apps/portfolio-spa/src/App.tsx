@@ -26,6 +26,7 @@ import TicTacToe from './components/TicTacToe';
 import './css/vanilla.css';
 import SimonGame from './components/SimonGame';
 import FibonacciClock from './components/FibonacciClock';
+import FridgeApp from './components/FridgeApp';
 
 interface NavItem {
     label: string;
@@ -183,6 +184,7 @@ const DrawerAppBar = () => {
                         <Route path="tic-tac-toe" element={<TicTacToe />} />
                         <Route path="simon-game" element={<SimonGame />} />
                         <Route path="fibonacci-clock" element={<FibonacciClock />} />
+                        <Route path="fridge-app" element={<FridgeApp />} />
                     </Route>
                     <Route path="*" element={<Error404 />} />
                 </Routes>

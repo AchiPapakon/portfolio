@@ -11,6 +11,7 @@ import pomodoroClockImg from './thumbnails/pomodoro-clock.png';
 import ticTacToeImg from './thumbnails/tic-tac-toe.png';
 import simonGameImg from './thumbnails/simon-game.png';
 import fibonacciClockImg from './thumbnails/fibonacci-clock.png';
+import fridgeAppImg from './thumbnails/fridge-app.png';
 
 interface ShowcaseItem {
     relativeUrl: string;
@@ -20,6 +21,11 @@ interface ShowcaseItem {
 }
 
 const showcaseItems: ShowcaseItem[] = [
+    {
+        relativeUrl: '/portfolio/fridge-app',
+        img: fridgeAppImg,
+        title: 'Fridge App',
+    },
     {
         relativeUrl: '/portfolio/fibonacci-clock',
         img: fibonacciClockImg,

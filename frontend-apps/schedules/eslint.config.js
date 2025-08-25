@@ -65,7 +65,6 @@ export default tseslint.config(
             'jsx-a11y/click-events-have-key-events': 0,
             'jsx-a11y/no-static-element-interactions': 0,
             'no-console': [1, { allow: ['error'] }],
-            'no-unused-vars': 2,
             'prettier/prettier': ['error', prettierConfig],
             'react/jsx-closing-bracket-location': 2,
             'react/jsx-filename-extension': [1, { extensions: ['.jsx', '.tsx'] }],
