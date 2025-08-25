@@ -12,6 +12,7 @@ import ticTacToeImg from './thumbnails/tic-tac-toe.png';
 import simonGameImg from './thumbnails/simon-game.png';
 import fibonacciClockImg from './thumbnails/fibonacci-clock.png';
 import fridgeAppImg from './thumbnails/fridge-app.png';
+import gameOfLifeImg from './thumbnails/game-of-life.png';
 
 interface ShowcaseItem {
     relativeUrl: string;
@@ -21,6 +22,11 @@ interface ShowcaseItem {
 }
 
 const showcaseItems: ShowcaseItem[] = [
+    {
+        relativeUrl: '/portfolio/game-of-life',
+        img: gameOfLifeImg,
+        title: 'Game of Life',
+    },
     {
         relativeUrl: '/portfolio/fridge-app',
         img: fridgeAppImg,

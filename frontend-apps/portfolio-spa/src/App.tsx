@@ -27,6 +27,7 @@ import './css/vanilla.css';
 import SimonGame from './components/SimonGame';
 import FibonacciClock from './components/FibonacciClock';
 import FridgeApp from './components/FridgeApp';
+import GameOfLife from './components/GameOfLife';
 
 interface NavItem {
     label: string;
@@ -185,6 +186,7 @@ const DrawerAppBar = () => {
                         <Route path="simon-game" element={<SimonGame />} />
                         <Route path="fibonacci-clock" element={<FibonacciClock />} />
                         <Route path="fridge-app" element={<FridgeApp />} />
+                        <Route path="game-of-life" element={<GameOfLife />} />
                     </Route>
                     <Route path="*" element={<Error404 />} />
                 </Routes>
