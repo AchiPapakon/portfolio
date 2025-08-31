@@ -1,10 +1,11 @@
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { Box, Paper, Stack, styled, Typography } from '@mui/material';
+import { whiteUnderlineSx } from 'shared/css/generic';
 import FreeCodeCampIcon from './free-code-camp.svg?react';
 import profilePic from './profile-pic.jpg';
 import IconButtonLink from '../IconButtonLink';
-import { dancingScript, whiteUnderlineSx } from '../../css/generic';
+import { dancingScript } from '../../css/generic';
 import calculatorImg from './thumbnails/calculator.png';
 import localWeatherImg from './thumbnails/local-weather.png';
 import pomodoroClockImg from './thumbnails/pomodoro-clock.png';
@@ -22,6 +23,11 @@ interface ShowcaseItem {
 }
 
 const showcaseItems: ShowcaseItem[] = [
+    {
+        relativeUrl: '/portfolio/jane-doe',
+        img: gameOfLifeImg,
+        title: 'Jane Doe website',
+    },
     {
         relativeUrl: '/portfolio/game-of-life',
         img: gameOfLifeImg,
@@ -198,7 +204,7 @@ const Showcase = () => (
                                 border: '1px solid white',
                                 borderRadius: '4px',
                                 textAlign: 'center',
-                                ...whiteUnderlineSx,
+                                ...whiteUnderlineSx(),
                             }}
                         >
                             <Stack justifyContent="space-between" height="100%">

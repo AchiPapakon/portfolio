@@ -22,16 +22,7 @@ const prettierConfig = JSON.parse(fs.readFileSync(path.resolve(dirname, '.pretti
 export default tseslint.config(
     {
         // It has to be separate https://github.com/eslint/eslint/discussions/18304#discussioncomment-9069706
-        ignores: [
-            '**/dist',
-            '**/build',
-            '**/coverage',
-            '**/temp',
-            '**/public',
-            '**/test',
-            'scripts/aws.js',
-            'src/serviceWorker.js',
-        ],
+        ignores: ['**/dist', '**/build', '**/coverage', '**/temp', '**/public', '**/test'],
     },
     {
         files: ['**/*.{js,ts,tsx}'],

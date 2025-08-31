@@ -1,5 +1,5 @@
 {
-    "name": "portfolio-spa",
+    "name": "jane-doe",
     "private": true,
     "version": "0.0.0",
     "type": "module",
@@ -10,7 +10,7 @@
         "preview": "vite preview"
     },
     "dependencies": {
-        "@fontsource/dancing-script": "^5.2.6",
+        "@fontsource/nunito": "^5.2.6",
         "shared": "link:..\\shared"
     }
 }

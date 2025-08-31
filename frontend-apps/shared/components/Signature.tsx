@@ -1,7 +1,11 @@
 import { Box, Toolbar, Typography } from '@mui/material';
-import { whiteUnderlineSx } from '../css/generic';
+import { whiteUnderlineSx } from '../css';
 
-const Signature = () => (
+interface SignatureProps {
+    underlineColor?: string;
+}
+
+const Signature = ({ underlineColor }: SignatureProps) => (
     <Toolbar sx={{ justifyContent: 'center', gap: 0.5, flexDirection: { xs: 'column', sm: 'row' } }}>
         <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: 'inherit' }}>
             <Typography>Coded by</Typography>
@@ -11,7 +15,7 @@ const Signature = () => (
                 href="https://www.achipapakon.com"
                 target="_blank"
                 rel="noopener"
-                sx={whiteUnderlineSx}
+                sx={whiteUnderlineSx({ underlineColor })}
             >
                 Achilleas Papakonstantinou
             </Typography>
