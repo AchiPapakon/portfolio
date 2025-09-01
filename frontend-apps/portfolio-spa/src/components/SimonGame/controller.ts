@@ -13,9 +13,9 @@ export const GameContext = createContext<GameContextType>({
 export class Game {
     public update: () => void;
 
-    private timerNPCBeep: number | null = null;
+    private timerNPCBeep: ReturnType<typeof setTimeout> | null = null;
 
-    private timerPlayerInput: number | null = null;
+    private timerPlayerInput: ReturnType<typeof setTimeout> | null = null;
 
     private playerFailed: boolean = false;
 
@@ -29,7 +29,6 @@ export class Game {
 
     public shouldPlayColor: CrystalColor | null = null;
 
-    // eslint-disable-next-line no-unused-vars
     constructor(update: (newGame: Game) => void) {
         this.update = () => update({ ...this });
     }

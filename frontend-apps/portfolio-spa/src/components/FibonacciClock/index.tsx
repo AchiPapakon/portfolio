@@ -37,7 +37,7 @@ const FibonacciClock = () => {
     const [box3Color, setBox3Color] = useState<BoxColor>('white');
     const [box5Color, setBox5Color] = useState<BoxColor>('white');
 
-    const timerRef = useRef<number | null>(null);
+    const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const tick = () => {
         const date: Date = new Date();

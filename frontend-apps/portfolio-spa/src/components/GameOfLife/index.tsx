@@ -36,7 +36,7 @@ const GameOfLife = () => {
     const [board, setBoard] = useState<Cell[][]>(emptyBoard);
     const [generations, setGenerations] = useState(0);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
-    const intervalRef = useRef<number | null>(null);
+    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const isEmptyBoard = board.every((row) => row.every((cell) => !cell));
 
