@@ -5,11 +5,10 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './propertyManagement/users/users.module';
 import { ApartmentsModule } from './propertyManagement/apartments/apartments.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     imports: [
-        UsersModule,
-        ApartmentsModule,
         ConfigModule.forRoot({
             envFilePath: ['.env'],
             isGlobal: true,
@@ -25,6 +24,9 @@ import { ApartmentsModule } from './propertyManagement/apartments/apartments.mod
             autoLoadEntities: true,
             synchronize: true, // TODO: false for production
         }),
+        UsersModule,
+        ApartmentsModule,
+        AuthModule,
     ],
     controllers: [AppController],
     providers: [AppService],

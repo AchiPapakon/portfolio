@@ -1,10 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
 import { CreateUserDto } from './dto/CreateUserDto';
 import { UpdateUserDto } from './dto/UpdateUserDto';
 import { ApartmentService } from '../apartments/apartments.service';
 import { Apartment } from '../apartments/apartment.entity';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -39,6 +40,7 @@ export class UsersController {
         return this.usersService.remove(Number(id));
     }
 
+    @UseGuards(AuthGuard)
     @Get(':id/apartments')
     getUserApartments(@Param('id') id: string): Promise<Apartment[]> {
         return this.apartmentService.findByUserId(Number(id));

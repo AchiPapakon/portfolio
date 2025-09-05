@@ -21,7 +21,7 @@ const navItems: NavItem[] = [
     { label: 'Contact', id: '/#contact' },
 ];
 
-const DrawerAppBar = () => (
+const App = () => (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <Toolbar items={navItems} name="Achilleas Papakonstantinou" />
         <Box component="main" position="relative" flex={1} display="flex" flexDirection="column">
@@ -48,4 +48,4 @@ const DrawerAppBar = () => (
     </Box>
 );
 
-export default DrawerAppBar;
+export default App;

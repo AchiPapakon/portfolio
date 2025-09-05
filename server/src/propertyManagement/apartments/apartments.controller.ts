@@ -1,35 +1,61 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, Req } from '@nestjs/common';
 import { ApartmentService } from './apartments.service';
 import { Apartment } from './apartment.entity';
 import { CreateApartmentDto } from './dto/create-apartment.dto';
 import { UpdateApartmentDto } from './dto/update-apartment.dto';
+import { AuthGuard } from '../../auth/auth.guard';
+import { Request } from 'express';
+import { JwtPayload } from '../../auth/interfaces';
 
 @Controller('apartments')
 export class ApartmentsController {
     constructor(private readonly apartmentService: ApartmentService) {}
 
+    @UseGuards(AuthGuard)
     @Get()
-    findAll(): Promise<Apartment[]> {
-        return this.apartmentService.findAll();
+    findAll(@Req() request: Request): Promise<Apartment[]> {
+        const user = request['user'] as JwtPayload;
+
+        if (user.role === 'admin') {
+            return this.apartmentService.findAll();
+        }
+
+        return this.apartmentService.findByUserId(user.id);
     }
 
+    @UseGuards(AuthGuard)
     @Get(':id')
-    findOne(@Param('id') id: string): Promise<Apartment | null> {
+    findOne(@Param('id') id: string, @Req() request: Request): Promise<Apartment | null> {
+        const user = request['user'] as JwtPayload;
+        console.log(`User ${user.email} is accessing apartment ${id}`);
         return this.apartmentService.findOne(Number(id));
     }
 
+    @UseGuards(AuthGuard)
     @Post()
-    create(@Body() createApartmentDto: CreateApartmentDto): Promise<Apartment> {
+    create(@Body() createApartmentDto: CreateApartmentDto, @Req() request: Request): Promise<Apartment> {
+        const user = request['user'] as JwtPayload;
+        console.log(`User ${user.email} is creating a new apartment`);
         return this.apartmentService.create(createApartmentDto);
     }
 
+    @UseGuards(AuthGuard)
     @Put(':id')
-    update(@Param('id') id: string, @Body() updateApartmentDto: UpdateApartmentDto): Promise<Apartment | null> {
+    update(
+        @Param('id') id: string,
+        @Body() updateApartmentDto: UpdateApartmentDto,
+        @Req() request: Request,
+    ): Promise<Apartment | null> {
+        const user = request['user'] as JwtPayload;
+        console.log(`User ${user.email} is updating apartment ${id}`);
         return this.apartmentService.update(Number(id), updateApartmentDto);
     }
 
+    @UseGuards(AuthGuard)
     @Delete(':id')
-    remove(@Param('id') id: string): Promise<void> {
+    remove(@Param('id') id: string, @Req() request: Request): Promise<void> {
+        const user = request['user'] as JwtPayload;
+        console.log(`User ${user.email} is deleting apartment ${id}`);
         return this.apartmentService.remove(Number(id));
     }
 }

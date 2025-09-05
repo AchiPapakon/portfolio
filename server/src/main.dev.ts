@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { WebSocketModule } from './websocket.module';
 import { WsAdapter } from '@nestjs/platform-ws';
 import { ValidationPipe } from '@nestjs/common';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
     const httpsOptions = {
@@ -14,17 +15,19 @@ async function bootstrap() {
         httpsOptions,
         cors: {
             origin: ['http://localhost:5173', 'https://localhost:5173'],
+            credentials: true,
         },
     });
 
-    // Enable validation using class-validator
+    app.use(cookieParser());
+
     app.useGlobalPipes(
         new ValidationPipe({
-            whitelist: true, // Remove non-whitelisted properties
-            transform: true, // Transform payloads to match DTOs
-            forbidNonWhitelisted: true, // Throw errors for non-whitelisted properties
+            whitelist: true,
+            transform: true,
+            forbidNonWhitelisted: true,
             transformOptions: {
-                enableImplicitConversion: true, // Auto-transform primitive types
+                enableImplicitConversion: true,
             },
         }),
     );
@@ -33,6 +36,7 @@ async function bootstrap() {
         httpsOptions,
         cors: {
             origin: ['http://localhost:5173', 'https://localhost:5173'],
+            credentials: true,
         },
     });
     wsApp.useWebSocketAdapter(new WsAdapter(wsApp));
