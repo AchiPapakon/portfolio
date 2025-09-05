@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
 import { CreateUserDto } from './dto/CreateUserDto';
@@ -6,6 +6,7 @@ import { UpdateUserDto } from './dto/UpdateUserDto';
 import { ApartmentService } from '../apartments/apartments.service';
 import { Apartment } from '../apartments/apartment.entity';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { JwtPayload } from 'src/auth/interfaces';
 
 @Controller('users')
 export class UsersController {
@@ -30,8 +31,18 @@ export class UsersController {
         return this.usersService.create(createUserDto);
     }
 
+    @UseGuards(AuthGuard)
     @Put(':id')
-    update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<User | null> {
+    update(
+        @Param('id') id: string,
+        @Body() updateUserDto: UpdateUserDto,
+        @Req() request: Request,
+    ): Promise<User | null> {
+        const user = request['user'] as JwtPayload;
+        if (user.role !== 'admin') {
+            throw new UnauthorizedException('You are not allowed to update this user');
+        }
+
         return this.usersService.update(Number(id), updateUserDto);
     }
 

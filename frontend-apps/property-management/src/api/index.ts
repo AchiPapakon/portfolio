@@ -1,4 +1,5 @@
 import axios from 'axios';
+import type { User } from '../types';
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_REMOTE_HOST,
@@ -29,5 +30,14 @@ export const checkAuth = async () => {
 
 export const getApartments = async () => {
     const response = await api.get('/apartments');
+    return response.data;
+};
+
+interface updateUserData extends User {
+    password?: string;
+}
+
+export const updateSelf = async (data: Partial<updateUserData>) => {
+    const response = await api.put(`/auth/update`, data);
     return response.data;
 };

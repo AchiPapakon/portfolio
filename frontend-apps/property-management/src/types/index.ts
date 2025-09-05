@@ -15,4 +15,5 @@ export interface User {
     role: string;
     id: number;
     firstName: string;
+    lastName: string;
 }

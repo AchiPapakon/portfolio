@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, Put, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/propertyManagement/users/dto/CreateUserDto';
 import { LoginDto } from './dto/LoginDto';
@@ -41,6 +41,20 @@ export class AuthController {
             path: '/',
         });
         return { message: 'Logout successful' };
+    }
+
+    @UseGuards(AuthGuard)
+    @Put('update')
+    async updateSelf(
+        @Body() updateUserDto: Partial<CreateUserDto>,
+        @Req() request: Request,
+        @Res({ passthrough: true }) response: Response,
+    ) {
+        const user = request['user'] as JwtPayload;
+        const result = await this.authService.updateSelf(user.id, updateUserDto);
+
+        this.setAuthCookie(response, result.access_token);
+        return result.user;
     }
 
     @UseGuards(AuthGuard)

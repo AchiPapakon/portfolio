@@ -4,6 +4,7 @@ import Register from '../Register';
 import Login from '../Login';
 import Error404 from '../Error404';
 import PrivateRoute from './PrivateRoute';
+import Settings from '../Settings';
 
 const AppRoutes = () => {
     return (
@@ -13,6 +14,14 @@ const AppRoutes = () => {
                 element={
                     <PrivateRoute>
                         <ApartmentsList />
+                    </PrivateRoute>
+                }
+            />
+            <Route
+                path="/settings"
+                element={
+                    <PrivateRoute>
+                        <Settings />
                     </PrivateRoute>
                 }
             />

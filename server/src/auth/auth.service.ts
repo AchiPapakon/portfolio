@@ -4,6 +4,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from '../propertyManagement/users/user.entity';
 import { Repository } from 'typeorm';
+import getHashedPassword from './helpers/getHashedPassword';
+import { CreateUserDto } from 'src/propertyManagement/users/dto/CreateUserDto';
 
 @Injectable()
 export class AuthService {
@@ -20,8 +22,7 @@ export class AuthService {
             throw new ConflictException('A user with this email already exists.');
         }
 
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        const hashedPassword = await getHashedPassword(password);
 
         const payloadForDatabase = {
             email,
@@ -34,7 +35,13 @@ export class AuthService {
 
         await this.usersRepository.save(user);
 
-        const payloadForJwt = { email, role: 'user', id: user.id, firstName };
+        const payloadForJwt = {
+            email,
+            role: 'user',
+            id: user.id,
+            firstName,
+            lastName,
+        };
 
         return {
             access_token: await this.jwtService.signAsync(payloadForJwt),
@@ -56,7 +63,52 @@ export class AuthService {
             throw new UnauthorizedException(errorMessage);
         }
 
-        const payloadForJwt = { email, role: 'user', id: user.id, firstName: user.firstName };
+        const payloadForJwt = {
+            email,
+            role: 'user',
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+        };
+
+        return {
+            access_token: await this.jwtService.signAsync(payloadForJwt),
+            user: payloadForJwt,
+        };
+    }
+
+    async updateSelf(id: number, { firstName, lastName, email, password }: Partial<CreateUserDto>) {
+        const user = await this.usersRepository.findOneBy({ id });
+
+        if (!user) {
+            throw new UnauthorizedException('User not found');
+        }
+
+        if (firstName) {
+            user.firstName = firstName;
+        }
+
+        if (lastName) {
+            user.lastName = lastName;
+        }
+
+        if (email) {
+            user.email = email;
+        }
+
+        if (password) {
+            user.password = await getHashedPassword(password);
+        }
+
+        await this.usersRepository.update(id, user);
+
+        const payloadForJwt = {
+            email: user.email,
+            role: 'user',
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+        };
 
         return {
             access_token: await this.jwtService.signAsync(payloadForJwt),
