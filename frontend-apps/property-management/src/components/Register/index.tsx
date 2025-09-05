@@ -1,19 +1,20 @@
-import { Alert, Box, Button, Grid, Paper, Snackbar, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid, Paper, TextField, Typography } from '@mui/material';
 import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
+import { isAxiosError } from 'axios';
 import { register } from '../../api';
 import AppContext from '../../store/app.context';
+import SnackbarContext from '../../store/snackbar/snackbar.context';
 
 const Register = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [openToast, setOpenToast] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
     const [isRegistering, setIsRegistering] = useState(false);
 
     const { setIsAuthenticated, setUser } = useContext(AppContext);
+    const { openSnackbar } = useContext(SnackbarContext);
     const navigate = useNavigate();
 
     const isFirstNameValid = firstName.length > 0 && firstName.length <= 50 && /^[\p{L}]+$/u.test(firstName);
@@ -33,19 +34,14 @@ const Register = () => {
                 navigate('/');
             } catch (error) {
                 console.error('Registration failed:', error);
-                setErrorMessage(error instanceof Error ? error.message : 'Registration failed. Please try again.');
-                setOpenToast(true);
+                openSnackbar(
+                    isAxiosError(error) ? error?.response?.data.message : 'Registration failed. Please try again.',
+                    'error'
+                );
             } finally {
                 setIsRegistering(false);
             }
         }
-    };
-
-    const handleCloseToast = (_event?: React.SyntheticEvent | Event, reason?: string) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpenToast(false);
     };
 
     const isRegisterButtonDisabled = isRegistering || !isFormValid;
@@ -114,12 +110,6 @@ const Register = () => {
             <Typography variant="body2" color="text.secondary">
                 Already have an account? <Link to="/login">Login</Link>
             </Typography>
-
-            <Snackbar open={openToast} autoHideDuration={4000} onClose={handleCloseToast}>
-                <Alert onClose={handleCloseToast} severity="error" variant="filled" sx={{ width: '100%' }}>
-                    {errorMessage}
-                </Alert>
-            </Snackbar>
         </Paper>
     );
 };
