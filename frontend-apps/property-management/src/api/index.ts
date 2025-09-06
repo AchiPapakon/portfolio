@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { CreateApartmentDto, User } from '../types';
+import type { Apartment, CreateApartmentDto, User } from '../types';
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_REMOTE_HOST,
@@ -44,5 +44,15 @@ export const updateSelf = async (data: Partial<updateUserData>) => {
 
 export const createApartment = async (data: CreateApartmentDto) => {
     const response = await api.post('/apartments', data);
+    return response.data;
+};
+
+export const deleteApartment = async (id: number) => {
+    const response = await api.delete(`/apartments/${id}`);
+    return response.data;
+};
+
+export const updateApartment = async (id: number, data: Partial<Apartment>) => {
+    const response = await api.put(`/apartments/${id}`, data);
     return response.data;
 };

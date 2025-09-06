@@ -1,4 +1,16 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, Req, UnauthorizedException } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Put,
+    UseGuards,
+    Req,
+    UnauthorizedException,
+    NotFoundException,
+} from '@nestjs/common';
 import { ApartmentService } from './apartments.service';
 import { Apartment } from './apartment.entity';
 import { CreateApartmentDto, CreateApartmentSelfDto } from './dto/create-apartment.dto';
@@ -49,21 +61,44 @@ export class ApartmentsController {
 
     @UseGuards(AuthGuard)
     @Put(':id')
-    update(
+    async update(
         @Param('id') id: string,
-        @Body() updateApartmentDto: UpdateApartmentDto,
+        @Body() body: CreateApartmentSelfDto,
         @Req() request: Request,
     ): Promise<Apartment | null> {
         const user = request['user'] as JwtPayload;
-        console.log(`User ${user.email} is updating apartment ${id}`);
-        return this.apartmentService.update(Number(id), updateApartmentDto);
+
+        const apartment = await this.apartmentService.findOne(Number(id));
+
+        if (!apartment) {
+            throw new NotFoundException('Apartment not found.');
+        }
+
+        if (apartment.userId !== user.id && user.role !== 'admin') {
+            throw new UnauthorizedException('You are not allowed to update this apartment.');
+        }
+
+        const payload = body as UpdateApartmentDto;
+        payload.userId = apartment.userId;
+
+        return this.apartmentService.update(Number(id), payload);
     }
 
     @UseGuards(AuthGuard)
     @Delete(':id')
-    remove(@Param('id') id: string, @Req() request: Request): Promise<void> {
+    async remove(@Param('id') id: string, @Req() request: Request): Promise<void> {
         const user = request['user'] as JwtPayload;
-        console.log(`User ${user.email} is deleting apartment ${id}`);
+
+        const apartment = await this.apartmentService.findOne(Number(id));
+
+        if (!apartment) {
+            throw new NotFoundException('Apartment not found.');
+        }
+
+        if (apartment.userId !== user.id && user.role !== 'admin') {
+            throw new UnauthorizedException('You are not allowed to delete this apartment.');
+        }
+
         return this.apartmentService.remove(Number(id));
     }
 }

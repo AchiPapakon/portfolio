@@ -1,11 +1,15 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField } from '@mui/material';
-import { useContext, useState } from 'react';
-import { createApartment } from '../../api';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, TextField } from '@mui/material';
+import { useContext, useEffect, useState } from 'react';
+import { Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
+import { isAxiosError } from 'axios';
+import { createApartment, deleteApartment, updateApartment } from '../../api';
 import AppContext from '../../store/app.context';
 import type { Apartment } from '../../types';
+import SnackbarContext from '../../store/snackbar/snackbar.context';
 
 interface EditApartmentPopupProps {
     mode: 'edit' | 'create';
+    apartment?: Apartment;
 }
 
 const getStringOrNull = (value: string) => {
@@ -20,8 +24,9 @@ const getNumberOrNull = (value: string) => {
     return trimmedValue === '' ? null : Number(trimmedValue);
 };
 
-const ModifyApartment = ({ mode }: EditApartmentPopupProps) => {
-    const [open, setOpen] = useState(false);
+const ModifyApartment = ({ mode, apartment }: EditApartmentPopupProps) => {
+    const [editDialogOpen, setEditDialogOpen] = useState(false);
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [city, setCity] = useState('');
     const [street, setStreet] = useState('');
     const [floor, setFloor] = useState('');
@@ -30,9 +35,44 @@ const ModifyApartment = ({ mode }: EditApartmentPopupProps) => {
     const [owner, setOwner] = useState('');
     const [tenant, setTenant] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
     const { setApartments } = useContext(AppContext);
+    const { openSnackbar } = useContext(SnackbarContext);
 
-    const isSubmitDisabled = !city || !street || isSubmitting;
+    useEffect(() => {
+        if (editDialogOpen && mode === 'edit' && apartment) {
+            setCity(apartment.city ?? '');
+            setStreet(apartment.street ?? '');
+            setFloor(apartment.floor !== null ? String(apartment.floor) : '');
+            setSurface(apartment.surface !== null ? String(apartment.surface) : '');
+            setEnergyClass(apartment.energyClass ?? '');
+            setOwner(apartment.owner ?? '');
+            setTenant(apartment.tenant ?? '');
+        }
+    }, [apartment, editDialogOpen, mode]);
+
+    const clearValues = () => {
+        setCity('');
+        setStreet('');
+        setFloor('');
+        setSurface('');
+        setEnergyClass('');
+        setOwner('');
+        setTenant('');
+    };
+
+    const isChanged =
+        mode === 'create' ||
+        (apartment &&
+            (apartment.city !== city.trim() ||
+                apartment.street !== street.trim() ||
+                apartment.floor !== getNumberOrNull(floor) ||
+                apartment.surface !== getNumberOrNull(surface) ||
+                apartment.energyClass !== getStringOrNull(energyClass) ||
+                apartment.owner !== getStringOrNull(owner) ||
+                apartment.tenant !== getStringOrNull(tenant)));
+
+    const isSubmitDisabled = !city || !street || isSubmitting || !isChanged;
 
     const handleChangeFloor = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
@@ -63,31 +103,90 @@ const ModifyApartment = ({ mode }: EditApartmentPopupProps) => {
             tenant: getStringOrNull(tenant),
         };
 
+        setIsSubmitting(true);
+
         if (mode === 'edit') {
-            // Handle edit apartment logic
+            try {
+                if (!apartment) {
+                    throw new Error('Apartment data is missing');
+                }
+
+                const updatedApartment: Apartment = await updateApartment(apartment.id, payload);
+                setApartments((prevApartments: Apartment[]) =>
+                    prevApartments.map((a) => (a.id === updatedApartment.id ? updatedApartment : a))
+                );
+                setEditDialogOpen(false);
+            } catch (error) {
+                console.error('Failed to update apartment:', error);
+                openSnackbar(
+                    isAxiosError(error) ? error?.response?.data.message : 'Failed to update apartment.',
+                    'error'
+                );
+            } finally {
+                setIsSubmitting(false);
+            }
         } else {
             try {
                 const createdApartment: Apartment = await createApartment(payload);
                 setApartments((prevApartments: Apartment[]) => [...prevApartments, createdApartment]);
 
-                setOpen(false);
+                setEditDialogOpen(false);
+
+                openSnackbar('Apartment created successfully', 'success');
             } catch (error) {
                 console.error('Failed to create apartment:', error);
-                // Handle error (e.g., show notification)
+                openSnackbar(
+                    isAxiosError(error) ? error?.response?.data.message : 'Failed to create apartment.',
+                    'error'
+                );
             } finally {
                 setIsSubmitting(false);
             }
         }
     };
 
-    const handleClose = () => setOpen(false);
+    const handleDeleteApartment = async () => {
+        setIsDeleting(true);
+        try {
+            if (!apartment) {
+                throw new Error('Apartment data is missing');
+            }
+
+            await deleteApartment(apartment.id);
+            setApartments((prevApartments) => prevApartments.filter((a) => a.id !== apartment.id));
+            openSnackbar('Apartment deleted successfully', 'success');
+            setDeleteDialogOpen(false);
+        } catch (error) {
+            console.error('Failed to delete apartment:', error);
+            openSnackbar(
+                isAxiosError(error) ? error?.response?.data.message : 'Delete failed. Please try again.',
+                'error'
+            );
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
+    const handleEditDialogClose = () => setEditDialogOpen(false);
+    const handleDeleteDialogClose = () => setDeleteDialogOpen(false);
 
     return (
         <>
-            <Button variant="contained" onClick={() => setOpen(true)}>
-                {mode === 'edit' ? 'Edit' : 'Add Apartment'}
-            </Button>
-            <Dialog open={open} onClose={handleClose}>
+            {mode === 'edit' ? (
+                <>
+                    <IconButton color="error">
+                        <DeleteIcon onClick={() => setDeleteDialogOpen(true)} />
+                    </IconButton>
+                    <IconButton onClick={() => setEditDialogOpen(true)}>
+                        <EditIcon />
+                    </IconButton>
+                </>
+            ) : (
+                <Button variant="contained" onClick={() => setEditDialogOpen(true)}>
+                    Add Apartment
+                </Button>
+            )}
+            <Dialog open={editDialogOpen} onClose={handleEditDialogClose} onTransitionExited={clearValues}>
                 <DialogTitle>{mode === 'edit' ? 'Edit Apartment' : 'Create Apartment'}</DialogTitle>
                 <DialogContent>
                     <Grid container spacing={2}>
@@ -134,11 +233,23 @@ const ModifyApartment = ({ mode }: EditApartmentPopupProps) => {
                     </Grid>
                 </DialogContent>
                 <DialogActions>
-                    <Button variant="contained" onClick={handleClose}>
+                    <Button variant="contained" onClick={handleEditDialogClose}>
                         Cancel
                     </Button>
                     <Button variant="contained" onClick={handleSubmitClick} color="primary" disabled={isSubmitDisabled}>
                         {mode === 'edit' ? 'Save Changes' : 'Create Apartment'}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog open={deleteDialogOpen} onClose={handleDeleteDialogClose}>
+                <DialogTitle>Confirm Deletion</DialogTitle>
+                <DialogContent>Are you sure you want to delete this apartment?</DialogContent>
+                <DialogActions>
+                    <Button variant="contained" onClick={handleDeleteDialogClose}>
+                        Cancel
+                    </Button>
+                    <Button variant="contained" onClick={handleDeleteApartment} color="error" disabled={isDeleting}>
+                        Delete
                     </Button>
                 </DialogActions>
             </Dialog>

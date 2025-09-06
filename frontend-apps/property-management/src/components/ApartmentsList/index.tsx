@@ -17,7 +17,7 @@ const ApartmentsList = () => {
     }, [setApartments]);
 
     return (
-        <Paper sx={{ width: 'min(100%, 600px)', mx: 'auto', p: 2 }}>
+        <Paper sx={{ width: '100%', mx: 'auto', p: 2 }}>
             <Grid container spacing={2}>
                 <Typography variant="h4">Apartments List</Typography>
                 <Box component="hr" width="100%" />
@@ -31,6 +31,7 @@ const ApartmentsList = () => {
                             <TableCell>Energy Class</TableCell>
                             <TableCell>Owner</TableCell>
                             <TableCell>Tenant</TableCell>
+                            <TableCell />
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -43,6 +44,9 @@ const ApartmentsList = () => {
                                 <TableCell>{apartment.energyClass ?? '-'}</TableCell>
                                 <TableCell>{apartment.owner ?? '-'}</TableCell>
                                 <TableCell>{apartment.tenant ?? '-'}</TableCell>
+                                <TableCell>
+                                    <ModifyApartment mode="edit" apartment={apartment} />
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
