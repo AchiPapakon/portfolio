@@ -1,9 +1,6 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
 
-export class CreateApartmentDto {
-    @IsNumber({}, { message: 'User ID must be a number' })
-    userId: number;
-
+export class CreateApartmentSelfDto {
     @IsNotEmpty()
     @IsString()
     @MaxLength(100, { message: 'City name can be at most 100 characters' })
@@ -36,4 +33,9 @@ export class CreateApartmentDto {
     @IsString()
     @MaxLength(100, { message: 'Tenant can be at most 100 characters' })
     tenant?: string;
+}
+
+export class CreateApartmentDto extends CreateApartmentSelfDto {
+    @IsNumber({}, { message: 'User ID must be a number' })
+    userId: number;
 }

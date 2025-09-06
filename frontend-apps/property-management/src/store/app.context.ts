@@ -3,11 +3,11 @@ import type { Apartment, User } from '../types';
 
 interface AppContextInterface {
     isAuthenticated: boolean | null;
-    setIsAuthenticated: (value: boolean | null) => void;
+    setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean | null>>;
     user: User | null;
-    setUser: (user: User | null) => void;
+    setUser: React.Dispatch<React.SetStateAction<User | null>>;
     apartments: Apartment[];
-    setApartments: (apartments: Apartment[]) => void;
+    setApartments: React.Dispatch<React.SetStateAction<Apartment[]>>;
 }
 
 const AppContext = createContext<AppContextInterface>({

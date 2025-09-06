@@ -1,6 +1,4 @@
-export interface Apartment {
-    id: number;
-    userId: number;
+export interface CreateApartmentDto {
     city: string;
     street: string;
     floor: number | null;
@@ -8,6 +6,11 @@ export interface Apartment {
     energyClass: string | null;
     owner: string | null;
     tenant: string | null;
+}
+
+export interface Apartment extends CreateApartmentDto {
+    id: number;
+    userId: number;
 }
 
 export interface User {

@@ -1,7 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, Req, UnauthorizedException } from '@nestjs/common';
 import { ApartmentService } from './apartments.service';
 import { Apartment } from './apartment.entity';
-import { CreateApartmentDto } from './dto/create-apartment.dto';
+import { CreateApartmentDto, CreateApartmentSelfDto } from './dto/create-apartment.dto';
 import { UpdateApartmentDto } from './dto/update-apartment.dto';
 import { AuthGuard } from '../../auth/auth.guard';
 import { Request } from 'express';
@@ -33,10 +33,18 @@ export class ApartmentsController {
 
     @UseGuards(AuthGuard)
     @Post()
-    create(@Body() createApartmentDto: CreateApartmentDto, @Req() request: Request): Promise<Apartment> {
+    create(@Body() body: CreateApartmentSelfDto | CreateApartmentDto, @Req() request: Request): Promise<Apartment> {
         const user = request['user'] as JwtPayload;
-        console.log(`User ${user.email} is creating a new apartment`);
-        return this.apartmentService.create(createApartmentDto);
+
+        const payload = body as CreateApartmentDto;
+
+        if ('userId' in body && body.userId !== user.id && user.role !== 'admin') {
+            throw new UnauthorizedException('You are now allowed to create an apartment for another user.');
+        }
+
+        payload.userId = user.id;
+
+        return this.apartmentService.create(payload);
     }
 
     @UseGuards(AuthGuard)

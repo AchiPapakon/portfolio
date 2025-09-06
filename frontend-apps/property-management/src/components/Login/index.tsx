@@ -43,9 +43,9 @@ const Login = () => {
 
     return (
         <Paper sx={{ width: 'min(100%, 600px)', mx: 'auto', p: 2 }}>
-            <Typography variant="h4">Login</Typography>
-            <Box component="hr" sx={{ my: 2 }} />
             <Grid container spacing={2}>
+                <Typography variant="h4">Login</Typography>
+                <Box component="hr" width="100%" />
                 <TextField
                     fullWidth
                     label="Email"

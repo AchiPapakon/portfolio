@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { User } from '../types';
+import type { CreateApartmentDto, User } from '../types';
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_REMOTE_HOST,
@@ -39,5 +39,10 @@ interface updateUserData extends User {
 
 export const updateSelf = async (data: Partial<updateUserData>) => {
     const response = await api.put(`/auth/update`, data);
+    return response.data;
+};
+
+export const createApartment = async (data: CreateApartmentDto) => {
+    const response = await api.post('/apartments', data);
     return response.data;
 };
