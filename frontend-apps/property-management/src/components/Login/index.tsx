@@ -30,7 +30,9 @@ const Login = () => {
             } catch (error) {
                 console.error('Login failed:', error);
                 openSnackbar(
-                    isAxiosError(error) ? error?.response?.data.message : 'Login failed. Please try again.',
+                    isAxiosError(error)
+                        ? (error.response?.data.message ?? error.message)
+                        : 'Login failed. Please try again.',
                     'error'
                 );
             } finally {

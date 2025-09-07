@@ -3,9 +3,10 @@ import { whiteUnderlineSx } from '../css';
 
 interface SignatureProps {
     underlineColor?: string;
+    linkColor?: string;
 }
 
-const Signature = ({ underlineColor }: SignatureProps) => (
+const Signature = ({ underlineColor, linkColor }: SignatureProps) => (
     <Toolbar sx={{ justifyContent: 'center', gap: 0.5, flexDirection: { xs: 'column', sm: 'row' } }}>
         <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: 'inherit' }}>
             <Typography>Coded by</Typography>
@@ -15,7 +16,7 @@ const Signature = ({ underlineColor }: SignatureProps) => (
                 href="https://www.achipapakon.com"
                 target="_blank"
                 rel="noopener"
-                sx={whiteUnderlineSx({ underlineColor })}
+                sx={whiteUnderlineSx({ underlineColor, color: linkColor })}
             >
                 Achilleas Papakonstantinou
             </Typography>

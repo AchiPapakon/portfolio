@@ -9,7 +9,7 @@ const App = () => (
             <Toolbar>
                 <Typography variant="h6" sx={{ flexGrow: 1 }}>
                     <Button href="/">
-                        <Typography color="secondary">Property Management</Typography>
+                        <Typography color="primary.contrastText">Property Management</Typography>
                     </Button>
                 </Typography>
                 <UserDropdown />
@@ -20,7 +20,7 @@ const App = () => (
             <AppRoutes />
         </Box>
         <AppBar component="footer" position="static">
-            <Signature />
+            <Signature linkColor="primary.contrastText" />
         </AppBar>
     </Box>
 );

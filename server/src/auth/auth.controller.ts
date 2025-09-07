@@ -24,6 +24,7 @@ export class AuthController {
         return result.user;
     }
 
+    @HttpCode(200)
     @Post('login')
     async login(@Body() loginDto: LoginDto, @Res({ passthrough: true }) response: Response) {
         const result = await this.authService.login(loginDto.email, loginDto.password);
@@ -69,7 +70,7 @@ export class AuthController {
             httpOnly: true,
             secure: true,
             sameSite: 'none',
-            maxAge: 3600000,
+            maxAge: 604_800_000, // 7 days
             path: '/',
         });
     }

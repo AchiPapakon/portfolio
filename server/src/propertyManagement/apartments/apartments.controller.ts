@@ -15,7 +15,7 @@ import { ApartmentService } from './apartments.service';
 import { Apartment } from './apartment.entity';
 import { CreateApartmentDto, CreateApartmentSelfDto } from './dto/create-apartment.dto';
 import { UpdateApartmentDto } from './dto/update-apartment.dto';
-import { AuthGuard } from '../../auth/auth.guard';
+import { AuthGuard, Roles } from '../../auth/auth.guard';
 import { Request } from 'express';
 import { JwtPayload } from '../../auth/interfaces';
 
@@ -36,6 +36,7 @@ export class ApartmentsController {
     }
 
     @UseGuards(AuthGuard)
+    @Roles('admin')
     @Get(':id')
     findOne(@Param('id') id: string, @Req() request: Request): Promise<Apartment | null> {
         const user = request['user'] as JwtPayload;

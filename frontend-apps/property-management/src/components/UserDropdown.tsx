@@ -1,4 +1,5 @@
 import { useContext, useRef, useState } from 'react';
+import PersonIcon from '@mui/icons-material/Person';
 import { Box, Button, ClickAwayListener, Divider, Grow, MenuItem, MenuList, Paper, Popper } from '@mui/material';
 import { useNavigate } from 'react-router';
 import AppContext from '../store/app.context';
@@ -43,7 +44,12 @@ const UserDropdown = () => {
 
     return (
         <Box>
-            <Button ref={anchorRef} variant="contained" onClick={handleToggle}>
+            <Button
+                ref={anchorRef}
+                onClick={handleToggle}
+                sx={{ color: 'primary.contrastText' }}
+                startIcon={<PersonIcon />}
+            >
                 {isAuthenticated ? user?.firstName : 'User'}
             </Button>
             <Popper
