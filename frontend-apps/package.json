@@ -41,5 +41,8 @@
         "build:portfolio-spa": "cd portfolio-spa && pnpm build",
         "build:schedules": "cd schedules && pnpm build",
         "build:production": "concurrently \"pnpm build:jane-doe\" \"pnpm build:portfolio-spa\" \"pnpm build:schedules\""
+    },
+    "engines": {
+        "node": "=22"
     }
 }

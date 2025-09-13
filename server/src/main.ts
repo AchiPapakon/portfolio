@@ -11,13 +11,15 @@ async function bootstrap() {
         cert: process.env.VITE_LOCALHOST_CERT?.replace(/\\n/g, '\n'),
     };
 
-    const app = await NestFactory.create(AppModule, {
-        httpsOptions,
+    const nestFactoryOptions = {
+        ...(process.env.NODE_ENV === 'development' && { httpsOptions }),
         cors: {
-            origin: ['http://localhost:5173', 'https://localhost:5173'],
+            origin: process.env.CORS_ORIGINS?.split(',') || [],
             credentials: true,
         },
-    });
+    };
+
+    const app = await NestFactory.create(AppModule, nestFactoryOptions);
 
     app.use(cookieParser());
 
@@ -32,13 +34,7 @@ async function bootstrap() {
         }),
     );
 
-    const wsApp = await NestFactory.create(WebSocketModule, {
-        httpsOptions,
-        cors: {
-            origin: ['http://localhost:5173', 'https://localhost:5173'],
-            credentials: true,
-        },
-    });
+    const wsApp = await NestFactory.create(WebSocketModule, nestFactoryOptions);
     wsApp.useWebSocketAdapter(new WsAdapter(wsApp));
 
     await Promise.all([
