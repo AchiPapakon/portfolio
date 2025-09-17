@@ -13,6 +13,9 @@ import ticTacToeImg from './thumbnails/tic-tac-toe.png';
 import fibonacciClockImg from './thumbnails/fibonacci-clock.png';
 import fridgeAppImg from './thumbnails/fridge-app.png';
 import gameOfLifeImg from './thumbnails/game-of-life.png';
+import janeDoeImg from './thumbnails/jane-doe.jpg';
+import propertyManagementImg from './thumbnails/property-management.png';
+import schedulesImg from './thumbnails/schedules.jpg';
 
 interface ShowcaseItem {
     relativeUrl: string;
@@ -23,9 +26,22 @@ interface ShowcaseItem {
 
 const showcaseItems: ShowcaseItem[] = [
     {
+        relativeUrl: '/schedules',
+        img: schedulesImg,
+        title: 'Schedules installable app',
+        newTab: true,
+    },
+    {
+        relativeUrl: '/portfolio/property-management',
+        img: propertyManagementImg,
+        title: 'Property Management',
+        newTab: true,
+    },
+    {
         relativeUrl: '/portfolio/jane-doe',
-        img: gameOfLifeImg,
+        img: janeDoeImg,
         title: 'Jane Doe website',
+        newTab: true,
     },
     {
         relativeUrl: '/portfolio/game-of-life',
@@ -139,18 +155,20 @@ const Showcase = () => (
                         <Typography>I have built this website using:</Typography>
                         <Typography>Frontend:</Typography>
                         <ul>
-                            <Typography component="li">React</Typography>
-                            <Typography component="li">Material UI (MUI)</Typography>
+                            <Typography component="li">React 19</Typography>
+                            <Typography component="li">Material UI (MUI) 7</Typography>
+                            <Typography component="li">Websockets</Typography>
                             <Typography component="li">TypeScript</Typography>
                             <Typography component="li">Vite</Typography>
                         </ul>
                         <Typography>Backend:</Typography>
                         <ul>
                             <Typography component="li">NestJS</Typography>
-                            <Typography component="li">Vite</Typography>
+                            <Typography component="li">Websockets</Typography>
                             <Typography component="li">MySQL</Typography>
                             <Typography component="li">Nginx</Typography>
-                            <Typography component="li">Ubuntu</Typography>
+                            <Typography component="li">Docker</Typography>
+                            <Typography component="li">Debian</Typography>
                         </ul>
                     </Paper>
                 </Box>
@@ -185,11 +203,12 @@ const Showcase = () => (
                         justifyItems: 'center',
                     }}
                 >
-                    {showcaseItems.map(({ relativeUrl, img, title }) => (
+                    {showcaseItems.map(({ relativeUrl, img, title, newTab }) => (
                         <Box
                             key={title}
                             component="a"
                             href={relativeUrl}
+                            target={newTab ? '_blank' : '_self'}
                             sx={{
                                 width: '300px',
                                 height: '385px',
