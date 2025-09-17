@@ -8,11 +8,13 @@ import Home from './Home';
 import Footer from './Footer';
 import Info from './Info';
 import Contact from './Contact';
+import backgroundImg from './background.jpg';
+import Error404 from './Error404';
 
 const navItems = [
-    { label: 'Home', id: '/' },
-    { label: 'Info', id: '/info' },
-    { label: 'Contact', id: '/contact' },
+    { label: 'Home', id: `${import.meta.env.VITE_ROUTE_PATH}/` },
+    { label: 'Info', id: `${import.meta.env.VITE_ROUTE_PATH}/info` },
+    { label: 'Contact', id: `${import.meta.env.VITE_ROUTE_PATH}/contact` },
 ];
 
 const JaneDoe = () => {
@@ -25,7 +27,7 @@ const JaneDoe = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 minHeight: '100vh',
-                backgroundImage: 'url(/background.jpg)',
+                backgroundImage: `url(${backgroundImg})`,
                 backgroundAttachment: 'fixed',
                 backgroundPosition: 'top',
                 backgroundRepeat: 'no-repeat',
@@ -37,7 +39,7 @@ const JaneDoe = () => {
                 name={
                     <HoverButton
                         onClick={() => {
-                            navigate('/');
+                            navigate(`${import.meta.env.VITE_ROUTE_PATH}/`);
                         }}
                     >
                         janedoe.com
@@ -47,10 +49,10 @@ const JaneDoe = () => {
             <Box component="main" position="relative" flex={1} display="flex" flexDirection="column">
                 <MuiToolbar />
                 <Routes>
-                    <Route index element={<Home />} />
-                    <Route path="/info" element={<Info />} />
-                    <Route path="/contact" element={<Contact />} />
-                    {/* <Route path="*" element={<Error404 />} /> */}
+                    <Route path={`${import.meta.env.VITE_ROUTE_PATH}/`} element={<Home />} />
+                    <Route path={`${import.meta.env.VITE_ROUTE_PATH}/info`} element={<Info />} />
+                    <Route path={`${import.meta.env.VITE_ROUTE_PATH}/contact`} element={<Contact />} />
+                    <Route path="*" element={<Error404 />} />
                 </Routes>
             </Box>
             <Footer />

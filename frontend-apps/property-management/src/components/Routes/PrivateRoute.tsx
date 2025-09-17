@@ -36,10 +36,10 @@ const PrivateRoute = ({ children, reverse = false }: PrivateRouteProps) => {
     }
 
     if (reverse) {
-        return !isAuthenticated ? children : <Navigate to="/" />;
+        return !isAuthenticated ? children : <Navigate to={`${import.meta.env.VITE_ROUTE_PATH}/`} />;
     }
 
-    return isAuthenticated ? children : <Navigate to="/register" />;
+    return isAuthenticated ? children : <Navigate to={`${import.meta.env.VITE_ROUTE_PATH}/register`} />;
 };
 
 export default PrivateRoute;

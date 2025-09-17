@@ -4,3 +4,6 @@ packages:
   - schedules
   - shared
   - property-management
+syncInjectedDepsAfterScripts:
+  - build
+injectWorkspacePackages: true

@@ -8,7 +8,7 @@ const App = () => (
         <AppBar component="nav">
             <Toolbar>
                 <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                    <Button href="/">
+                    <Button href={import.meta.env.VITE_ROUTE_PATH}>
                         <Typography color="primary.contrastText">Property Management</Typography>
                     </Button>
                 </Typography>

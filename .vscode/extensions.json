@@ -13,6 +13,7 @@
         "richie5um2.vscode-sort-json",
         "wayou.vscode-todo-highlight",
         "vscode-icons-team.vscode-icons",
-        "dotjoshjohnson.xml"
+        "dotjoshjohnson.xml",
+        "ms-azuretools.vscode-docker"
     ]
 }

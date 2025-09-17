@@ -26,7 +26,7 @@ const Login = () => {
                 setIsAuthenticated(true);
                 setUser(user);
 
-                navigate('/');
+                navigate(`${import.meta.env.VITE_ROUTE_PATH}/`);
             } catch (error) {
                 console.error('Login failed:', error);
                 openSnackbar(

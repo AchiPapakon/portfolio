@@ -36,7 +36,7 @@ const UserDropdown = () => {
         try {
             await logout();
             setIsAuthenticated(false);
-            navigate('/register');
+            navigate(`${import.meta.env.VITE_ROUTE_PATH}/register`);
         } catch (error) {
             console.error('Logout failed:', error);
         }
@@ -72,15 +72,27 @@ const UserDropdown = () => {
                             <ClickAwayListener onClickAway={handleClose}>
                                 {isAuthenticated ? (
                                     <MenuList autoFocusItem={open} onKeyDown={handleListKeyDown} onClick={handleClose}>
-                                        <MenuItem onClick={() => navigate('/')}>Apartments</MenuItem>
+                                        <MenuItem onClick={() => navigate(`${import.meta.env.VITE_ROUTE_PATH}/`)}>
+                                            Apartments
+                                        </MenuItem>
                                         <Divider />
-                                        <MenuItem onClick={() => navigate('/settings')}>Settings</MenuItem>
+                                        <MenuItem
+                                            onClick={() => navigate(`${import.meta.env.VITE_ROUTE_PATH}/settings`)}
+                                        >
+                                            Settings
+                                        </MenuItem>
                                         <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
                                     </MenuList>
                                 ) : (
                                     <MenuList autoFocusItem={open} onKeyDown={handleListKeyDown} onClick={handleClose}>
-                                        <MenuItem onClick={() => navigate('/register')}>Register</MenuItem>
-                                        <MenuItem onClick={() => navigate('/login')}>Login</MenuItem>
+                                        <MenuItem
+                                            onClick={() => navigate(`${import.meta.env.VITE_ROUTE_PATH}/register`)}
+                                        >
+                                            Register
+                                        </MenuItem>
+                                        <MenuItem onClick={() => navigate(`${import.meta.env.VITE_ROUTE_PATH}/login`)}>
+                                            Login
+                                        </MenuItem>
                                     </MenuList>
                                 )}
                             </ClickAwayListener>

@@ -10,7 +10,7 @@ const AppRoutes = () => {
     return (
         <Routes>
             <Route
-                index
+                path={`${import.meta.env.VITE_ROUTE_PATH}/`}
                 element={
                     <PrivateRoute>
                         <ApartmentsList />
@@ -18,7 +18,7 @@ const AppRoutes = () => {
                 }
             />
             <Route
-                path="/settings"
+                path={`${import.meta.env.VITE_ROUTE_PATH}/settings`}
                 element={
                     <PrivateRoute>
                         <Settings />
@@ -26,7 +26,7 @@ const AppRoutes = () => {
                 }
             />
             <Route
-                path="/register"
+                path={`${import.meta.env.VITE_ROUTE_PATH}/register`}
                 element={
                     <PrivateRoute reverse>
                         <Register />
@@ -34,7 +34,7 @@ const AppRoutes = () => {
                 }
             />
             <Route
-                path="/login"
+                path={`${import.meta.env.VITE_ROUTE_PATH}/login`}
                 element={
                     <PrivateRoute reverse>
                         <Login />

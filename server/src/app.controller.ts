@@ -1,17 +1,9 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { AppService } from './app.service';
 import singleFetch from './SingleFetch';
 import { LocalWeatherResponse, WeatherResponse } from 'types/localWeather';
 
 @Controller()
 export class AppController {
-    constructor(private readonly appService: AppService) {}
-
-    @Get()
-    getHello(): string {
-        return this.appService.getHello();
-    }
-
     @Get('/api/local-weather')
     async getLocalWeather(@Query('lat') lat: number, @Query('lon') lon: number): Promise<LocalWeatherResponse> {
         try {

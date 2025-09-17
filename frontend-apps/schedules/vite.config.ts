@@ -14,6 +14,7 @@ export default defineConfig(({ mode }) => {
                 cert: env.VITE_LOCALHOST_CERT?.replace(/\\n/g, '\n'),
             },
         },
+        base: env.VITE_ROUTE_PATH,
         test: {
             globals: true,
         },

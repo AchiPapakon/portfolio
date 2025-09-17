@@ -31,7 +31,7 @@ const Register = () => {
                 setIsAuthenticated(true);
                 setUser(user);
 
-                navigate('/');
+                navigate(`${import.meta.env.VITE_ROUTE_PATH}/`);
             } catch (error) {
                 console.error('Registration failed:', error);
                 openSnackbar(
@@ -108,7 +108,7 @@ const Register = () => {
 
             <Box component="hr" sx={{ my: 2 }} />
             <Typography variant="body2" color="text.secondary">
-                Already have an account? <Link to="/login">Login</Link>
+                Already have an account? <Link to={`${import.meta.env.VITE_ROUTE_PATH}/login`}>Login</Link>
             </Typography>
         </Paper>
     );
