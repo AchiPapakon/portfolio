@@ -3,7 +3,9 @@
 .gitignore
 *.md
 **/dist
+**/.pnpm-store
 
 .env*
 Dockerfile
-mysql/
+/mysql
+/certbot

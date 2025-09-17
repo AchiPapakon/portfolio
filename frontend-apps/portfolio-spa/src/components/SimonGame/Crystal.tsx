@@ -13,7 +13,6 @@ interface CrystalProps {
 }
 
 const Crystal = ({ color, game }: CrystalProps) => {
-    // Create a const named hexColor that automatically maps the color prop to its corresponding hex value
     const innerShadowColor = {
         blue: '#8080FF',
         red: '#FF9999',
@@ -56,7 +55,7 @@ const Crystal = ({ color, game }: CrystalProps) => {
                 ...(isOngoing &&
                     !isSounding && {
                         ':hover': {
-                            boxShadow: `inset 0 0 15px ${innerShadowColor}`, // put a lighter tone of the "color" prop. For example, if "blue" then #8080FF
+                            boxShadow: `inset 0 0 15px ${innerShadowColor}`,
                         },
                     }),
             }}

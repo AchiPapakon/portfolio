@@ -10,7 +10,6 @@ import calculatorImg from './thumbnails/calculator.png';
 import localWeatherImg from './thumbnails/local-weather.png';
 import pomodoroClockImg from './thumbnails/pomodoro-clock.png';
 import ticTacToeImg from './thumbnails/tic-tac-toe.png';
-import simonGameImg from './thumbnails/simon-game.png';
 import fibonacciClockImg from './thumbnails/fibonacci-clock.png';
 import fridgeAppImg from './thumbnails/fridge-app.png';
 import gameOfLifeImg from './thumbnails/game-of-life.png';
@@ -42,11 +41,6 @@ const showcaseItems: ShowcaseItem[] = [
         relativeUrl: '/portfolio/fibonacci-clock',
         img: fibonacciClockImg,
         title: 'Fibonacci Clock',
-    },
-    {
-        relativeUrl: '/portfolio/simon-game',
-        img: simonGameImg,
-        title: 'Simon Game',
     },
     {
         relativeUrl: '/portfolio/tic-tac-toe',

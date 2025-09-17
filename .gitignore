@@ -1,5 +1,6 @@
 .env*
 !.env*.example
+nginx.conf
 
 # Logs
 logs
@@ -14,7 +15,8 @@ node_modules
 dist
 dist-ssr
 *.local
-mysql/
+/mysql
+/certbot
 
 # Editor directories and files
 .vscode/*
@@ -26,3 +28,5 @@ mysql/
 *.njsproj
 *.sln
 *.sw?
+
+**/.pnpm-store
