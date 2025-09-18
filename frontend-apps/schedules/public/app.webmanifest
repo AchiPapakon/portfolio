@@ -1,15 +1,33 @@
 {
-    "background_color": "#ffffff",
+    "name": "Schedules",
+    "short_name": "Schedules",
     "description": "A web application that provides various features.",
     "display": "standalone",
     "icons": [
         {
-            "sizes": "144x144",
-            "src": "/vite144.svg",
-            "type": "image/svg+xml"
+            "src": "/schedules/web-app-manifest-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/schedules/web-app-manifest-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "/schedules/web-app-manifest-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/schedules/web-app-manifest-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
         }
     ],
-    "name": "Schedules",
-    "start_url": "/",
+    "start_url": "/schedules",
+    "background_color": "#ffffff",
     "theme_color": "#000000"
 }

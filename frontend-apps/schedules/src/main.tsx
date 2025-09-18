@@ -10,7 +10,7 @@ import '@fontsource/roboto/700.css';
 import store from './redux/store.ts';
 
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js');
+    navigator.serviceWorker.register(`${import.meta.env.VITE_ROUTE_PATH}/sw.js`);
 }
 
 createRoot(document.getElementById('root')!).render(

@@ -1,5 +1,8 @@
 {
     "iFeelLucky": "I feel lucky",
+    "install": "Install",
+    "installPrompt": "Install Schedules on your device for quick access",
+    "later": "Later",
     "nearbyStationError": "No Station nearby",
     "noDepartures": "No departures",
     "noStationSelected": "No Station selected",

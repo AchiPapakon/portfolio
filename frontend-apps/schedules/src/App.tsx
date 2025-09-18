@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, Grid, Paper, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, Grid, Paper, Snackbar, Alert, Slide, TextField, Typography } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import type { StationDeparture, StationDepartures } from 'types/gateway';
 import type { ListSuggestion } from 'types/ListSuggestion';
@@ -23,6 +23,15 @@ import { websocketsIsOpenSelector } from './redux/websocket/selectors';
 import Results from './components/Results';
 import Background from './components/styled/Background';
 
+interface BeforeInstallPromptEvent extends Event {
+    readonly platforms: string[];
+    readonly userChoice: Promise<{
+        outcome: 'accepted' | 'dismissed';
+        platform: string;
+    }>;
+    prompt(): Promise<void>;
+}
+
 const options = {
     enableHighAccuracy: true,
     maximumAge: 0,
@@ -43,6 +52,9 @@ const App = () => {
     const stationDetails = useSelector(stationDetailsObjectSelector);
     const stationDetailsFetching = useSelector(stationDetailsFetchingSelector);
     const selectedStation = useSelector(selectedStationSelector);
+    const [installPromptEvent, setInstallPromptEvent] = useState<BeforeInstallPromptEvent | null | undefined>(
+        undefined
+    );
 
     const timer = useRef<NodeJS.Timeout>(undefined);
 
@@ -65,11 +77,48 @@ const App = () => {
         timer.current = setInterval(() => {
             setCurrentTime(Date.now());
         }, 1_000);
+    }, []);
+
+    useEffect(() => {
+        const handleBeforeInstallPrompt = (e: Event) => {
+            setInstallPromptEvent(e as BeforeInstallPromptEvent);
+        };
+
+        if (installPromptEvent === undefined) {
+            window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+        }
 
         return () => {
             clearInterval(timer.current);
+            window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
         };
-    }, []);
+    }, [installPromptEvent]);
+
+    const handleCloseBanner = () => {
+        setInstallPromptEvent(null);
+    };
+
+    const setUserDisagree = () => {
+        localStorage.setItem('schedules-dismissedInstall', JSON.stringify(Date.now() + 5 * 60 * 1000));
+        handleCloseBanner();
+    };
+
+    const handleInstallClick = async () => {
+        if (installPromptEvent) {
+            await installPromptEvent.prompt();
+            const { outcome } = await installPromptEvent.userChoice;
+
+            if (outcome === 'dismissed') {
+                setUserDisagree();
+            } else {
+                handleCloseBanner();
+            }
+        }
+    };
+
+    const shouldAskUserToInstall =
+        Date.now() > (JSON.parse(localStorage.getItem('schedules-dismissedInstall') || '0') || 0) &&
+        Boolean(installPromptEvent);
 
     return (
         <Background>
@@ -139,6 +188,35 @@ const App = () => {
                         )}
                 </Grid>
             </div>
+            <Snackbar
+                open={shouldAskUserToInstall}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                slots={{ transition: Slide }}
+            >
+                <Alert
+                    severity="info"
+                    icon={false}
+                    variant="filled"
+                    sx={{
+                        width: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                    }}
+                    action={
+                        <Box sx={{ display: 'flex', gap: 1 }}>
+                            <Button size="small" color="inherit" onClick={setUserDisagree}>
+                                {translate('later') || 'Later'}
+                            </Button>
+                            <Button size="small" variant="contained" onClick={handleInstallClick}>
+                                {translate('install') || 'Install'}
+                            </Button>
+                        </Box>
+                    }
+                >
+                    {translate('installPrompt') || 'Install this app on your device for quick access'}
+                </Alert>
+            </Snackbar>
         </Background>
     );
 };
