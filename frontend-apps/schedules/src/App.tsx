@@ -122,14 +122,13 @@ const App = () => {
 
     return (
         <Background>
-            <div style={{ display: 'grid', gap: '8px' }}>
+            <Box sx={{ display: 'grid', gap: '8px', maxWidth: { sm: 350 } }}>
                 <LightIndicator on={isOpen} />
                 <Autocomplete
                     disablePortal
                     options={stationsSuggestions}
                     getOptionKey={(option) => option.id}
                     disabled={stationDetailsFetching}
-                    sx={{ width: 300 }}
                     value={selectedStation}
                     onChange={handleAutocompleteSelect}
                     onInputChange={(_, value: string) => {
@@ -143,11 +142,9 @@ const App = () => {
                     // eslint-disable-next-line react/jsx-props-no-spreading
                     renderInput={(params) => <TextField {...params} label={translate('station')} />}
                 />
-                <div>
-                    <Button variant="contained" disabled={stationDetailsFetching} onClick={handleFeelLuckyClick}>
-                        {translate('iFeelLucky')}
-                    </Button>
-                </div>
+                <Button fullWidth variant="contained" disabled={stationDetailsFetching} onClick={handleFeelLuckyClick}>
+                    {translate('iFeelLucky')}
+                </Button>
                 <Grid container spacing={1}>
                     <Results
                         fetching={stationDetailsFetching}
@@ -158,7 +155,7 @@ const App = () => {
                         Object.entries(stationDetails).length > 0 &&
                         Object.entries(stationDetails).map(
                             ([title, stationDepartures]: [string, StationDepartures]) => (
-                                <Paper key={title}>
+                                <Paper key={title} sx={{ width: '100%' }}>
                                     <Background>
                                         <Typography>[{title}]</Typography>
                                         <Grid container spacing={1} direction="column">
@@ -187,7 +184,7 @@ const App = () => {
                             )
                         )}
                 </Grid>
-            </div>
+            </Box>
             <Snackbar
                 open={shouldAskUserToInstall}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}

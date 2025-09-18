@@ -17,7 +17,7 @@ const ApartmentsList = () => {
     }, [setApartments]);
 
     return (
-        <Paper sx={{ width: '100%', mx: 'auto', p: 2 }}>
+        <Paper sx={{ width: '100%', mx: 'auto', p: 2, overflowX: 'auto' }}>
             <Grid container spacing={2}>
                 <Typography variant="h4">Apartments List</Typography>
                 <Box component="hr" width="100%" />

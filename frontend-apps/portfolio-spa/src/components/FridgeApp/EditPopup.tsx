@@ -88,7 +88,7 @@ const EditPopup = ({ recipeId, open, onClose }: EditPopupProps) => {
             <DialogTitle>{originalTitle.current ? `Edit: ${originalTitle.current}` : 'Add Recipe'}</DialogTitle>
             <DialogContent>
                 <Grid container sx={{ pt: 1, gap: 2 }}>
-                    <TextField label="Recipe Name" value={title} onChange={(e) => setTitle(e.target.value)} />
+                    <TextField fullWidth label="Recipe Name" value={title} onChange={(e) => setTitle(e.target.value)} />
                     <Box sx={{ width: '100%' }}>
                         <Typography>Ingredients:</Typography>
                         <List sx={{ width: '100%' }}>

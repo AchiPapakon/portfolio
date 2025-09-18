@@ -3,6 +3,8 @@ import { Box, Button, Grid, Stack, styled, Typography } from '@mui/material';
 import ShowcaseContainer from '../ShowcaseContainer';
 import { dancingScript } from '../../css/generic';
 
+const DIMENSION = 35;
+
 const StyledButton = styled(Button)(({ theme }) => ({
     '&:disabled': {
         backgroundColor: theme.palette.primary.main,
@@ -11,6 +13,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 type Cell = boolean;
+type Board = Cell[][];
 
 const getBackgroundColor = (cell: Cell) => {
     return cell ? 'red' : 'transparent';
@@ -30,10 +33,10 @@ const countNeighbors = (board: Cell[][], x: number, y: number): number => {
     return count;
 };
 
-const emptyBoard = Array.from({ length: 50 }, () => Array(50).fill(false));
+const emptyBoard: Board = Array.from({ length: DIMENSION }, () => Array(DIMENSION).fill(false));
 
 const GameOfLife = () => {
-    const [board, setBoard] = useState<Cell[][]>(emptyBoard);
+    const [board, setBoard] = useState<Board>(emptyBoard);
     const [generations, setGenerations] = useState(0);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -41,7 +44,9 @@ const GameOfLife = () => {
     const isEmptyBoard = board.every((row) => row.every((cell) => !cell));
 
     const randomizeBoard = () => {
-        const newBoard = Array.from({ length: 50 }, () => Array.from({ length: 50 }, () => Math.random() > 0.7));
+        const newBoard: Board = Array.from({ length: DIMENSION }, () =>
+            Array.from({ length: DIMENSION }, () => Math.random() > 0.7)
+        );
         setBoard(newBoard);
     };
 
@@ -116,17 +121,17 @@ const GameOfLife = () => {
 
     return (
         <ShowcaseContainer sx={{ backgroundColor: 'black' }}>
-            <Stack spacing={1} sx={{ mt: 1, alignItems: 'center', width: 'min(100%, 502px)' }}>
+            <Stack spacing={1} sx={{ p: 1, alignItems: 'center', width: { xs: '100%', sm: 10 * DIMENSION } }}>
                 <Typography textAlign="center" variant="h2" color="secondary" fontFamily={dancingScript}>
                     Game of Life
                 </Typography>
                 <Typography textAlign="center" variant="h5" color="secondary">
-                    You can add or remove cells while running the simulation
+                    You can add or remove cells during the simulation
                 </Typography>
                 <Box sx={{ border: '1px solid', borderColor: 'primary.main' }}>
                     {board.map((row, rowIndex) => (
                         // eslint-disable-next-line react/no-array-index-key
-                        <Grid container key={rowIndex}>
+                        <Grid container key={rowIndex} flexWrap="nowrap">
                             {row.map((cell, colIndex) => (
                                 <Box
                                     // eslint-disable-next-line react/no-array-index-key
@@ -145,7 +150,7 @@ const GameOfLife = () => {
                         </Grid>
                     ))}
                 </Box>
-                <Grid container justifyContent="space-between" sx={{ width: 502 }}>
+                <Grid container justifyContent="space-between" sx={{ width: { xs: '100%', sm: 10 * DIMENSION } }}>
                     <StyledButton variant="contained" onClick={isPlaying ? pause : play} disabled={isEmptyBoard}>
                         {isPlaying ? 'Pause' : 'Play'}
                     </StyledButton>

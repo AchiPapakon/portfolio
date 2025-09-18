@@ -3,8 +3,8 @@ import { useContext } from 'react';
 import { TicTacToeContext } from './TicTacToeContext';
 
 const StyledBox = styled(Box)(() => ({
-    width: 130,
-    height: 130,
+    width: 115,
+    height: 115,
     backgroundColor: 'gray',
     fontSize: '70px',
     display: 'flex',

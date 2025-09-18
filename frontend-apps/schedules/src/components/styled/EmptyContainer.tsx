@@ -3,7 +3,7 @@ import Background from './Background';
 
 const EmptyContainer = styled(Background)({
     display: 'flex',
-    width: 300,
+    width: '100%',
     justifyContent: 'center',
 });
 
